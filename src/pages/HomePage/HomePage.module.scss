@@ -1,0 +1,38 @@
+/* Home page styles */
+.page { background: #ffffff; min-height: 100vh; width: 100%; }
+
+.mainLayout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+.leftContent { min-width: 0; }
+.rightSidebar { position: sticky; top: 200px; }
+
+/* Search */
+.searchSection { background: #ffffff; padding: 4px 0 5px; }
+.searchContainer { display: flex; align-items: center; justify-content: center; gap: 24px; max-width: 100%; }
+.logoSection { flex-shrink: 0; }
+.zareshopLogo { display: flex; align-items: center; gap: 8px; }
+.logoImg { width: 120px; height: auto; display: block; }
+.searchBar { display: flex; align-items: center; gap: 0; flex: 1; max-width: 760px; border: 2px solid #16a34a; border-radius: 9999px; background: #fff; padding: 0; overflow: hidden; height: 40px; }
+.allCategoriesBtn { background: transparent; border: 0; border-radius: 0; padding: 0 10px; font-weight: 600; color: #0f5132; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 12px; margin-right: 0; height: 100%; }
+.menuIcon { font-size: 14px; }
+.searchIcon { font-size: 13px; }
+.searchInput { flex: 1; height: 100%; padding: 0 12px; border: 0; border-radius: 0; font-size: 14px; outline: none; background: #fff; }
+.searchBtn { background: #16a34a; color: #ffffff; border: 0; border-radius: 0; padding: 0 16px; font-weight: 600; cursor: pointer; font-size: 13px; margin-left: 0; height: 100%; display: inline-flex; align-items: center; }
+.searchBtn:hover { background: #17b24f; }
+.locationSection { display: flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 6px 10px; border: 1px solid #e5e7eb; border-radius: 9999px; background: #fff; }
+.locationIcon { font-size: 14px; color: #16a34a; }
+.locationText { font-size: 13px; color: #374151; font-weight: 600; }
+
+/* Recommendations */
+.recommendationsSection { background: #ffffff; padding: 32px 0; margin-top: 24px; }
+.recommendationsTitle { font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 24px; }
+.recommendationsList { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.recommendationCard { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; transition: all 0.15s ease; position: relative; }
+.recThumb { width: 100%; height: 160px; object-fit: cover; border-bottom: 1px solid #e5e7eb; }
+.recBody { padding: 12px; }
+.recTitle { font-size: 14px; font-weight: 600; color: #111827; line-height: 1.3; margin-bottom: 4px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.recPrice { color: #111827; font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+.recLocation { color: #6b7280; font-size: 12px; }
+
+/* Load/Error */
+.loading { text-align: center; padding: 32px; color: #6b7280; font-size: 16px; }
+.error { text-align: center; padding: 32px; color: #dc2626; font-size: 16px; }

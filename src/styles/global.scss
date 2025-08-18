@@ -1,0 +1,139 @@
+/* Global styles and variables - Avito.ru clean white theme */
+:root {
+  /* Clean white/gray palette like Avito */
+  --avito-blue: #0080ff; /* Avito blue accent */
+  --avito-blue-light: #f0f8ff;
+  --avito-gray-100: #f8f9fa;
+  --avito-gray-200: #e9ecef;
+  --avito-gray-300: #dee2e6;
+  --avito-gray-400: #adb5bd;
+  --avito-gray-500: #6c757d;
+  --avito-gray-600: #495057;
+  --avito-gray-700: #343a40;
+  --avito-gray-800: #212529;
+  --avito-dark: #2c3e50; /* Dark nav color */
+  --avito-accent: #ff6b35; /* Orange accent */
+  
+  /* Semantic colors */
+  --brand-primary: var(--avito-blue);
+  --brand-primary-hover: #0066cc;
+  --brand-secondary: var(--avito-gray-200);
+  --brand-background: #ffffff;
+  --brand-text: var(--avito-gray-700);
+  --brand-muted: var(--avito-gray-500);
+  --brand-border: var(--avito-gray-200);
+  --brand-shadow: rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+/* Avito-style clean background */
+html { background: var(--brand-background); }
+body { 
+  margin: 0; 
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Arial', sans-serif; 
+  color: var(--brand-text); 
+  background: var(--brand-background);
+  line-height: 1.5;
+  font-size: 14px; /* Avito standard */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container { 
+  width: 100%; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 1rem; 
+}
+
+.button { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 10px 20px; 
+  border-radius: 6px; 
+  border: 1px solid transparent; 
+  font-weight: 500; 
+  font-size: 14px;
+  cursor: pointer; 
+  transition: all 0.15s ease;
+  text-decoration: none;
+  min-height: 40px;
+}
+.buttonPrimary { 
+  background: var(--brand-primary); 
+  color: #fff; 
+  box-shadow: 0 1px 3px rgba(0, 128, 255, 0.15);
+}
+.buttonPrimary:hover { 
+  background: var(--brand-primary-hover); 
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 128, 255, 0.25);
+}
+.buttonGhost { 
+  background: transparent; 
+  color: var(--brand-primary); 
+  border: 1px solid var(--brand-border);
+}
+.buttonGhost:hover { 
+  background: var(--avito-gray-100); 
+  color: var(--brand-primary-hover);
+  border-color: var(--brand-primary);
+}
+
+.link, a { 
+  color: var(--brand-primary); 
+  text-decoration: none; 
+  font-weight: 400;
+  transition: color 0.15s ease;
+}
+.link:hover, a:hover { 
+  color: var(--brand-primary-hover); 
+  text-decoration: underline; 
+}
+
+.card { 
+  background: var(--brand-background); 
+  border-radius: 8px; 
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); 
+  border: 1px solid var(--brand-border); 
+  overflow: hidden;
+  transition: all 0.15s ease;
+}
+.card:hover {
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+img { max-width: 100%; display: block; }
+
+/* Utilities */
+.textMuted { color: var(--brand-muted); }
+.heading { 
+  color: var(--brand-text); 
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Typography scale - Avito style */
+.text-xs { font-size: 11px; line-height: 14px; }
+.text-sm { font-size: 12px; line-height: 16px; }
+.text-base { font-size: 14px; line-height: 20px; }
+.text-lg { font-size: 16px; line-height: 22px; }
+.text-xl { font-size: 18px; line-height: 24px; }
+.text-2xl { font-size: 20px; line-height: 28px; }
+.text-3xl { font-size: 24px; line-height: 32px; }
+.text-4xl { font-size: 28px; line-height: 36px; }
+
+/* Font weights - Avito style */
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+/* Spacing utilities */
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.space-y-4 > * + * { margin-top: 1rem; }
+.space-y-6 > * + * { margin-top: 1.5rem; }
+.space-y-8 > * + * { margin-top: 2rem; }

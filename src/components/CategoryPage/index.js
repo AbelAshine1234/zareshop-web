@@ -1,0 +1,6 @@
+export { default as Breadcrumbs } from './Breadcrumbs/Breadcrumbs'
+export { default as PageHeader } from './PageHeader/PageHeader'
+export { default as FiltersSidebar } from './FiltersSidebar/FiltersSidebar'
+export { default as ProductControls } from './ProductControls/ProductControls'
+export { default as ProductList } from './ProductList/ProductList'
+export { default as SupplierList } from './SupplierList/SupplierList'

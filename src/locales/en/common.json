@@ -1,0 +1,153 @@
+{
+  "app": {
+    "name": "ZareShop",
+    "tagline": "Your marketplace for everything"
+  },
+  "navigation": {
+    "home": "Home",
+    "categories": "Categories",
+    "cart": "Cart",
+    "favorites": "Favorites",
+    "login": "Login and registration",
+    "business": "For business",
+    "careers": "Careers",
+    "help": "Help",
+    "catalogs": "Catalogs"
+  },
+  "buttons": {
+    "login": "Login",
+    "register": "Register",
+    "continue": "Continue",
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "readMore": "Read more",
+    "placeAd": "Place an ad",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "showPhone": "Show phone number",
+    "writeMessage": "Write a message",
+    "followSeller": "Follow the seller",
+    "tryAgain": "Try Again",
+    "refreshPage": "Refresh Page",
+    "shopNow": "Shop Now",
+    "signUp": "Sign Up"
+  },
+  "forms": {
+    "email": "Email",
+    "password": "Password",
+    "phoneNumber": "Phone Number",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "enterPhoneNumber": "Enter your phone number",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "alreadyHaveAccount": "Already have a profile?",
+    "dontHaveAccount": "Don't have an account?",
+    "phoneValidation": "Ethiopian phone numbers: exactly 9 digits starting with 9",
+    "termsAgreement": "By registering, you agree to {{appName}}'s terms of use and privacy policy"
+  },
+  "products": {
+    "recommendations": "Recommendations for you",
+    "price": "Price",
+    "category": "Category",
+    "description": "Description",
+    "specifications": "Specifications",
+    "otherProducts": "Other Products",
+    "relatedProducts": "Related Products",
+    "productDetails": "Product Details",
+    "seller": "Seller",
+    "location": "Location",
+    "condition": "Condition",
+    "brand": "Brand",
+    "model": "Model"
+  },
+  "categories": {
+    "auto": "Auto",
+    "realEstate": "Real estate",
+    "job": "Job",
+    "clothing": "Clothing, footwear, accessories",
+    "hobbies": "Hobbies and recreation",
+    "animals": "Animals",
+    "business": "Ready-made business and equipment",
+    "services": "Services",
+    "electronics": "Electronics",
+    "homeGarden": "For home and garden",
+    "spareParts": "Spare parts",
+    "children": "Products for children",
+    "travel": "Accommodation for travel",
+    "beautyHealth": "Beauty and health"
+  },
+  "messages": {
+    "loading": "Loading...",
+    "loadingProducts": "Loading products...",
+    "loadingHeader": "Loading header...",
+    "loadingCategories": "Loading categories...",
+    "loadingRecommendations": "Loading recommendations...",
+    "loadingServices": "Loading services...",
+    "error": "An error occurred",
+    "tryRefreshing": "Please try refreshing the page",
+    "noResults": "No results found",
+    "apiOffline": "Demo products - API offline",
+    "networkError": "Network connection error"
+  },
+  "ios": {
+    "bannerText": "How to continue using ZareShop on iOS.",
+    "instructions": "To add ZareShop to your home screen:\\n\\n1. Tap the Share button in Safari\\n2. Scroll down and tap \"Add to Home Screen\"\\n3. Tap \"Add\" to confirm\\n\\nNow you can access ZareShop like a native app!"
+  },
+  "profile": {
+    "personalProfile": "For personal matters",
+    "personalDescription": "Buying and selling things, searching for services, vacancies or housing",
+    "businessProfile": "For work and business", 
+    "businessDescription": "Search for clients, tenants or employees",
+    "profileQuestion": "What is a profile for?",
+    "contactPerson": "Contact person"
+  },
+  "errors": {
+    "somethingWrong": "Oops! Something went wrong",
+    "errorMessage": "We're sorry, but something unexpected happened. Please try refreshing the page.",
+    "technicalDetails": "Technical Details"
+  },
+  "services": {
+    "title": "Services and amenities",
+    "delivery": {
+      "title": "Delivery",
+      "description": "Inspection upon receipt and the possibility of free return of goods"
+    },
+    "autoteka": {
+      "title": "Autoteka", 
+      "description": "Vehicle history report: mileage, owners, information on collateral, accidents, and repairs"
+    },
+    "trips": {
+      "title": "Trips",
+      "description": "Select available dates from the calendar and pay online to guarantee your stay."
+    },
+    "ihelp": {
+      "title": "#iHelp",
+      "description": "Save nature and help people with us"
+    }
+  },
+  "footer": {
+    "copyright": "© KEH eCommerce LLC 2007–{{year}}.",
+    "technologies": "This site uses recommendation technologies.",
+    "siteRules": "Site Rules",
+    "advertising": "Advertising on the website",
+    "aboutCompany": "About the company",
+    "careers": "Careers"
+  },
+  "login": {
+    "enterPhoneTitle": "Enter your phone number",
+    "profileQuestionTitle": "What is a profile for?",
+    "alreadyHaveProfile": "Already have a profile?",
+    "logIn": "Log in",
+    "termsAgreement": "By registering, you agree to <termsLink>ZareShop's terms of use</termsLink> and <privacyLink>privacy policy</privacyLink>",
+    "termsOfUse": "ZareShop's terms of use",
+    "privacyPolicy": "privacy policy"
+  },
+  "promotions": {
+    "saleText": "🎉 Big Sale! Up to 70% off on electronics - Limited time offer!",
+    "newsletterText": "📧 Subscribe to our newsletter and get exclusive deals and updates!",
+    "appText": "📱 Download our mobile app for faster shopping and exclusive mobile offers!"
+  },
+  "currency": "ETB",
+  "phoneCode": "+251"
+}

@@ -1,0 +1,173 @@
+.rightColumn {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  
+  @media (max-width: 1024px) {
+    order: -1;
+    width: 100%;
+  }
+}
+
+.priceSection {
+  margin-bottom: 20px;
+  
+  .price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+  }
+}
+
+.contactButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  
+  .phoneButton,
+  .messageButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: 500;
+    
+    &:hover {
+      background: #f8f9fa;
+      border-color: #ccc;
+    }
+  }
+  
+  .phoneButton {
+    color: #0066cc;
+    
+    .phoneMask {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+  }
+  
+  .messageButton {
+    color: #333;
+    
+    .messageSubtext {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+  }
+}
+
+.sellerInfo {
+  margin-bottom: 20px;
+  
+  .sellerHeader {
+    .sellerName {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      .sellerIcon {
+        font-size: 18px;
+      }
+    }
+    
+    .sellerRating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      
+      .rating {
+        font-weight: 600;
+        color: #333;
+      }
+      
+      .stars {
+        color: #ffc107;
+        font-size: 14px;
+      }
+      
+      .reviews {
+        font-size: 12px;
+        color: #666;
+      }
+    }
+    
+    .sellerType {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    
+    .followButton {
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      margin-bottom: 8px;
+      
+      &:hover {
+        background: #e9ecef;
+      }
+    }
+    
+    .contactPerson {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+}
+
+.askSeller {
+  margin-bottom: 20px;
+  
+  .messageInput {
+    display: flex;
+    gap: 8px;
+    
+    input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      font-size: 13px;
+      
+      &:focus {
+        outline: none;
+        border-color: #0066cc;
+      }
+    }
+    
+    .sendButton {
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      
+      &:hover {
+        background: #e9ecef;
+      }
+    }
+  }
+}
+

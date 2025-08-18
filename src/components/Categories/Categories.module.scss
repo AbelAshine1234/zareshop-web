@@ -1,0 +1,104 @@
+/* Categories styles scoped inside the component folder */
+
+$bg: #ffffff;
+$ink: #111418;
+$ink-weak: #5b636a;
+$ring: #e5eaf0; // subtle border
+$tile: #f2f1f0;
+$hover: #f7f9fb;
+$link: #1677ff;
+
+.categories {
+font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, Noto Sans, sans-serif;
+background: $bg;
+color: $ink;
+
+}
+
+.container {
+  max-width: 1240px; // page width
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+// Grid matches the compact two-row feel with 14px gutters
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px; // exact gutter
+  padding: 0 0 8px; // tight under search
+}
+
+// Category tile
+.card {
+position: relative;
+display: grid;
+grid-template-rows: auto 1fr;
+height: 70px; // fixed card height
+padding: 10px 12px 0 12px; // top-left text padding
+border-radius: 14px; // rounded as in screenshot
+background: $tile;
+border: 1px solid $ring;
+text-decoration: none !important;
+overflow: hidden;
+transition: background 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+
+&:hover {
+background: $hover; // lighten only
+border-color: $ring; // no border emphasis on hover
+box-shadow: none; // no extra shadow on hover
+text-decoration: none !important;
+}
+
+&.is-active .title { color: $link; }
+}
+
+.title {
+ font-size: 11px !important;
+line-height: 13px;
+ font-weight: 400;
+letter-spacing: 0;
+color: $ink;
+ font-family: "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ min-width: 109px;
+ max-width: 150px; // constrain title width
+white-space: pre-line; // allow manual \n
+// two-line clamp for neat tiles
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+
+// Thumbnail hugs the bottom-right and never overlaps the title area
+.thumb {
+position: absolute;
+right: 6px;
+bottom: 0; // sits on the bottom curve like in screenshot
+width: 50%; // visual balance with text
+max-width: 132px;
+height: 70px; // match card height constraint
+display: flex;
+align-items: flex-end;
+justify-content: flex-end;
+pointer-events: none;
+
+img {
+width: 50px;
+height: 40px;
+object-fit: contain; // keep aspect ratio inside cap
+border-radius: 9999px; // oval mask to avoid rectangular look
+clip-path: ellipse(50% 50% at 50% 50%);
+display: block;
+filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
+}
+}
+
+// Small screen tuning
+@media (max-width: 680px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .title { max-width: 70%; }
+}
+
+
+

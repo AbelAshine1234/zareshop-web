@@ -1,0 +1,153 @@
+{
+  "app": {
+    "name": "ZareShop",
+    "tagline": "Gabaa keessan waan hundaaf"
+  },
+  "navigation": {
+    "home": "Mana",
+    "categories": "Ramaddii",
+    "cart": "Qaruuraa",
+    "favorites": "Jaallataman",
+    "login": "Seensa fi galmee",
+    "business": "Daldalaaf",
+    "careers": "Carraa hojii",
+    "help": "Gargaarsa",
+    "catalogs": "Kataloogota"
+  },
+  "buttons": {
+    "login": "Seeni",
+    "register": "Galmeessii",
+    "continue": "Itti fufi",
+    "close": "Cufii",
+    "dismiss": "Dhaabi",
+    "readMore": "Dabalata dubbisi",
+    "placeAd": "Beeksisa kaayi",
+    "addToCart": "Gara qaruuratti dabalii",
+    "buyNow": "Amma bitii",
+    "showPhone": "Lakkoofsa bilbilaa mul'isi",
+    "writeMessage": "Ergaa barreessi",
+    "followSeller": "Gurgurtaa hordofi",
+    "tryAgain": "Ammas yaali",
+    "refreshPage": "Fuula haaromsi",
+    "shopNow": "Amma bitii",
+    "signUp": "Galmeessii"
+  },
+  "forms": {
+    "email": "Email",
+    "password": "Jecha darbee",
+    "phoneNumber": "Lakkoofsa bilbilaa",
+    "firstName": "Maqaa jalqabaa",
+    "lastName": "Maqaa abbaa",
+    "enterPhoneNumber": "Lakkoofsa bilbilaa keessan galchaa",
+    "rememberMe": "Na yaadadhu",
+    "forgotPassword": "Jecha darbee irraanfatee?",
+    "alreadyaveAccount": "Accounts qabaattaa?",
+    "dontHaveAccount": "Account hin qabduu?",
+    "phoneValidation": "Lakkoofsa bilbilaa Itoophiyaa: lakkoofsa 9 9rraa jalqabu",
+    "termsAgreement": "Galmeessuudhaan waliigaltee tajaajilaa {{appName}} fi imaammata dhuunfaa fudhattaniirtu"
+  },
+  "products": {
+    "recommendations": "Gorsa keessaniif",
+    "price": "Gatii",
+    "category": "Ramaddii",
+    "description": "Ibsa",
+    "specifications": "Ibsa bal'aa",
+    "otherProducts": "Oomishaalee biroo",
+    "relatedProducts": "Oomishaalee walqabatan",
+    "productDetails": "Bal'ina oomishaa",
+    "seller": "Gurgurtaa",
+    "location": "Bakka",
+    "condition": "Haala",
+    "brand": "Maqaa daldaltootaa",
+    "model": "Moodeela"
+  },
+  "categories": {
+    "auto": "Konkolaataa",
+    "realEstate": "Qabeenya duwwaa",
+    "job": "Hojii",
+    "clothing": "Uffata, kophee, faaya",
+    "hobbies": "Fedhii fi bashannana",
+    "animals": "Bineensota",
+    "business": "Daldalaa qophaa'ee fi meeshaalee",
+    "services": "Tajaajiloota",
+    "electronics": "Elektiroonikii",
+    "homeGarden": "Manaaf fi lafa biqiltuu",
+    "spareParts": "Kutaalee jijjiirraa",
+    "children": "Oomishaalee ijoollee",
+    "travel": "Imala boqonnaa",
+    "beautyHealth": "Bareedina fi fayyaa"
+  },
+  "messages": {
+    "loading": "Fe'aa jira...",
+    "loadingProducts": "Oomishaalee fe'aa jira...",
+    "loadingHeader": "Mataa fe'aa jira...",
+    "loadingCategories": "Ramaddii fe'aa jira...",
+    "loadingRecommendations": "Gorsa fe'aa jira...",
+    "loadingServices": "Tajaajiloota fe'aa jira...",
+    "error": "Dogoggorri uumameera",
+    "tryRefreshing": "Maaloo fuula haaromsaa",
+    "noResults": "Bu'aan hin argamne",
+    "apiOffline": "Oomishaalee fakkeenyaa - API jalaa jira",
+    "networkError": "Dogoggora walitti dhufeenya networkii"
+  },
+  "ios": {
+    "bannerText": "iOS irratti ZareShop itti fayyadamuu akkamitti akka itti fuftan.",
+    "instructions": "ZareShop gara fuula mana jalqabaatti dabaluuf:\\n\\n1. Safari keessatti buttaa qoodduu tuqaa\\n2. Gadi buusaatii \"Gara Fuula Mana Jalqabaa Dabalii\" tuqaa\\n3. Mirkaneessuuf \"Dabalii\" tuqaa\\n\\nAmuma ZareShop akka appii dhuunfaatti fayyadamuu dandeessu!"
+  },
+  "profile": {
+    "personalProfile": "Dhimma dhuunfaaf",
+    "personalDescription": "Wantoota bitachuu fi gurguruu, tajaajila, hojii ykn mana jireenyaa barbaaduuf",
+    "businessProfile": "Hojii fi daldalaaf",
+    "businessDescription": "Maamiltoota, kiraa fudhattootaa ykn hojjettootaa barbaaduuf",
+    "profileQuestion": "Piroofaayiliin maaliif barbaachisa?",
+    "contactPerson": "Nama wal qunnamtii"
+  },
+  "errors": {
+    "somethingWrong": "Dhiifama! Wanti tokko dogoggoreera",
+    "errorMessage": "Dhiifama, garuu wanti hin eegamne uumameera. Maaloo fuula haaromsaa.",
+    "technicalDetails": "Bal'ina teeknikaa"
+  },
+  "services": {
+    "title": "Tajaajiloota fi mijaawaa",
+    "delivery": {
+      "title": "Geessuu",
+      "description": "Yeroo fudhannuutti qormaata fi carraa bilisaa oomishaalee deebisuu"
+    },
+    "autoteka": {
+      "title": "Autoteka",
+      "description": "Gabaasa seenaa konkolaataa: faggeenya, abbaa qabeenyaa, odeeffannoo wabaduu, balaa fi suphaa"
+    },
+    "trips": {
+      "title": "Imala",
+      "description": "Guyyoota jiran kalendaraa irraa filachuun turuu keessan mirkaneessuuf toora interneetiin kaffaltanii."
+    },
+    "ihelp": {
+      "title": "#iHelp",
+      "description": "Uumama baraaruun namoota nu waliin gargaaruun"
+    }
+  },
+  "footer": {
+    "copyright": "© KEH eCommerce LLC 2007–{{year}}.",
+    "technologies": "Marsariiwwan kun teeknoolojiiwwan gorsaa fayyadama.",
+    "siteRules": "Seerota Marsariiwwaa",
+    "advertising": "Beeksisa marsariiwwa irratti",
+    "aboutCompany": "Waa'ee dhaabbatichaa",
+    "careers": "Carraa hojii"
+  },
+  "login": {
+    "enterPhoneTitle": "Lakkoofsa bilbilaa keessan galchaa",
+    "profileQuestionTitle": "Piroofaayiliin maaliif barbaachisa?",
+    "alreadyHaveProfile": "Duraaan piroofaayilii qabdaa?",
+    "logIn": "Seeni",
+    "termsAgreement": "Galmeessuudhaan <termsLink>waliigaltee tajaajilaa ZareShop</termsLink> fi <privacyLink>imaammata dhuunfaa</privacyLink> fudhattaniirtu",
+    "termsOfUse": "waliigaltee tajaajilaa ZareShop",
+    "privacyPolicy": "imaammata dhuunfaa"
+  },
+  "promotions": {
+    "saleText": "🎉 Gurgurtaa guddaa! Elektiroonikii irratti hanga %70 hir'ina - Yeroo muraasaaf qofa!",
+    "newsletterText": "📧 Oduu dhaamsa keenyaaf galmeessaatii fi daldala addaa fi fooyya'iinsa argataa!",
+    "appText": "📱 Bittaa ariifacha fi daldala mobaayilii addaatiif appii keenya mobaayilii fe'aa!"
+  },
+  "currency": "Br",
+  "phoneCode": "+251"
+}

@@ -1,0 +1,73 @@
+.searchSection {
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+.searchContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  gap: 1rem;
+  align-items: center;
+}
+
+.logoSection {}
+
+.zareshopLogo {}
+
+.logoImg {
+  height: 40px;
+}
+
+.searchBar {
+  display: grid;
+  grid-template-columns: 220px 1fr 120px;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.allCategoriesBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.menuIcon {}
+
+.searchIcon {}
+
+.searchInput {
+  height: 40px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 0 0.75rem;
+}
+
+.searchBtn {
+  height: 40px;
+  background: #0a7b34;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.locationSection {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #444;
+}
+
+.locationIcon {}
+
+.locationText {}
+
+

@@ -1,0 +1,41 @@
+@import '../../../styles/global.scss';
+
+.activeTabSection {
+  margin-bottom: 1rem;
+}
+
+.activeTab {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+  position: relative;
+}
+
+.tabLabel {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #666;
+}
+
+.tabCount {
+  font-size: 0.8rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.tabIndicator {
+  position: absolute;
+  bottom: -0.4rem;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #666;
+  border-radius: 1px;
+}
+
+.tabLine {
+  height: 1px;
+  background: #666;
+  width: 100%;
+}

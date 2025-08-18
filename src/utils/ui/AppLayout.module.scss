@@ -1,0 +1,55 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--brand-100); /* subtle greenish background */
+  border-bottom: 1px solid #dbeee3; /* subtle divider */
+}
+
+.navbar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--brand-700);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.brandIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--brand-600); /* ZARE green */
+  color: #fff;
+}
+
+.navActions { display: flex; align-items: center; gap: 10px; }
+
+.footer {
+  border-top: 1px solid #dbeee3;
+  background: var(--brand-100); /* match page background */
+}
+.footerInner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 0;
+  color: #0b6b57;
+}
+@media (min-width: 640px){
+  .footerInner { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+.main { flex: 1; }
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
