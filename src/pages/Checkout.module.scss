@@ -1,0 +1,8 @@
+.wrap { padding: 48px 0; display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 900px){ .wrap { grid-template-columns: 1fr 0.9fr; } }
+.card { background: #fff; border-radius: 14px; border: 1px solid rgba(0,0,0,.06); box-shadow: 0 4px 16px rgba(2,44,34,.06); padding: 16px; }
+.h2 { font-size: 20px; font-weight: 800; color: #064e3b; margin-bottom: 10px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.input { padding: 10px 12px; border-radius: 10px; border: 1px solid #cde7df; width: 100%; }
+.total { display: flex; align-items: center; justify-content: space-between; font-weight: 700; color: #064e3b; margin-top: 12px; }
+.payRow { display: flex; gap: 8px; margin-top: 12px; }

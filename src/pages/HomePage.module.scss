@@ -1,0 +1,39 @@
+.page { padding: 32px 0 56px; }
+.headerRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.title { font-size: 26px; font-weight: 900; color: #064e3b; }
+.subtitle { color: #0b6b57; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (min-width: 720px){ .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px){ .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1340px){ .grid { grid-template-columns: repeat(6, 1fr); } }
+
+.catCard { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(0,0,0,.06); background: #fff; box-shadow: 0 4px 16px rgba(2,44,34,.06); }
+.thumb { width: 100%; height: 160px; object-fit: cover; display: block; }
+.body { padding: 10px 12px; }
+.name { font-weight: 800; color: #064e3b; }
+.count { color: #0b6b57; font-size: 13px; margin-top: 2px; }
+
+.cardLink { position: absolute; inset: 0; }
+
+/* Jiji-style latest listings */
+.section { margin-top: 28px; }
+.sectionHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.h2 { font-size: 20px; font-weight: 900; color: #064e3b; }
+.seeAll { color: var(--brand-700); text-decoration: none; font-weight: 600; }
+.seeAll:hover { color: var(--brand-700); text-decoration: none; }
+
+.listings { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (min-width: 720px){ .listings { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px){ .listings { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1340px){ .listings { grid-template-columns: repeat(6, 1fr); } }
+
+.listingCard { background: #fff; border: 1px solid rgba(0,0,0,.06); border-radius: 14px; overflow: hidden; box-shadow: 0 4px 12px rgba(2,44,34,.06); position: relative; }
+.listingThumb { width: 100%; height: 160px; object-fit: cover; display: block; }
+.listingBody { padding: 10px 12px; }
+.listingTitle { font-weight: 700; color: #053b2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.listingMeta { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+.price { color: var(--brand-700); font-weight: 800; }
+.metaRight { color: #0b6b57; font-size: 12px; opacity: .9; }
+.badgeRow { display: flex; gap: 6px; margin-top: 6px; }
+.badge { font-size: 11px; padding: 4px 6px; border-radius: 999px; background: #ecfdf5; color: #047857; border: 1px solid #cde7df; }

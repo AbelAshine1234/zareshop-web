@@ -1,0 +1,40 @@
+/* Global styles and variables */
+:root {
+  /* ZARE green palette (flat, logo-like) */
+  --brand-50: #eaf7ec;
+  --brand-100: #d1efd6;
+  --brand-200: #a3e0b0;
+  --brand-300: #74d18a;
+  --brand-400: #45c264;
+  --brand-500: #2eb653; /* primary */
+  --brand-600: #249745;
+  --brand-700: #1d7b39;
+  --brand-800: #165f2c;
+  --brand-900: #114a22;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+/* Set a visible greenish background across the app */
+html { background: var(--brand-100); }
+body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Noto Sans, Ubuntu, Cantarell, 'Helvetica Neue', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif; color: #053b2e; background: transparent; }
+
+.container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1rem; }
+
+.button { display: inline-flex; align-items: center; justify-content: center; padding: 0.6rem 1rem; border-radius: 0.6rem; border: 1px solid transparent; font-weight: 600; cursor: pointer; transition: color .15s ease, border-color .15s ease; }
+.buttonPrimary { background: var(--brand-600); color: #fff; }
+/* No hover background change to keep flat feel */
+.buttonPrimary:hover { background: var(--brand-600); }
+.buttonGhost { background: transparent; color: var(--brand-700); }
+.buttonGhost:hover { background: transparent; color: var(--brand-700); }
+
+.link, a { color: var(--brand-700); text-decoration: none; }
+.link:hover, a:hover { color: var(--brand-700); text-decoration: none; }
+
+.card { background: #fff; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 16px rgba(17, 74, 34, .05); border: 1px solid rgba(0,0,0,.06); overflow: hidden; }
+
+img { max-width: 100%; display: block; }
+
+/* Utilities */
+.textMuted { color: #0b6b57; opacity: .85; }
+.heading { color: #053b2e; }

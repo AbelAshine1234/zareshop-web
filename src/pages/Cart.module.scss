@@ -1,0 +1,6 @@
+.wrapper { padding: 48px 0; }
+.title { font-size: 24px; font-weight: 800; color: #064e3b; margin-bottom: 12px; }
+.item { display: grid; grid-template-columns: 72px 1fr auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid #e6f3ef; }
+.name { font-weight: 700; color: #064e3b; }
+.price { color: var(--brand-700); }
+.summary { margin-top: 16px; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; }

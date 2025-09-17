@@ -1,0 +1,7 @@
+.wrap { padding: 48px 0; max-width: 720px; }
+.card { background: #fff; border-radius: 16px; padding: 20px; border: 1px solid rgba(0,0,0,.06); box-shadow: 0 6px 24px rgba(2,44,34,.08); }
+.title { font-size: 22px; font-weight: 800; color: #064e3b; margin-bottom: 12px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #cde7df; margin-top: 10px; }
+.textarea { width: 100%; min-height: 120px; padding: 12px 14px; border-radius: 12px; border: 1px solid #cde7df; margin-top: 10px; resize: vertical; }
+.actions { display: flex; gap: 10px; margin-top: 14px; align-items: center; justify-content: flex-end; }

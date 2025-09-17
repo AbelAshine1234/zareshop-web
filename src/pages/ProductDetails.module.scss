@@ -1,0 +1,7 @@
+.wrapper { padding: 48px 0; }
+.grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 900px){ .grid { grid-template-columns: 1fr 1fr; } }
+.title { font-size: 26px; font-weight: 800; color: #064e3b; margin-bottom: 8px; }
+.price { color: var(--brand-700); font-weight: 700; margin-bottom: 16px; }
+.desc { color: #0b6b57; line-height: 1.6; }
+.actions { display: flex; gap: 10px; margin-top: 16px; }
