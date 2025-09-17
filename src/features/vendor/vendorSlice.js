@@ -1,16 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { api, endpoints } from '../../api/api'
-
-// Format Ethiopian phone number by prepending +251
-const formatEthiopian = (phoneLocal) => {
-  // Remove any existing +251 or 251 prefix if present
-  const cleanPhone = phoneLocal.replace(/^(\+251|251)/, '')
-  return `+251${cleanPhone}`
-}
+import { formatEthiopianPhone } from '../../utils/phoneUtils'
 
 const initialState = {
   step: 1,
-  totalSteps: 7, // Owner, Basics, Categories, Payment, Documents, Review, Subscription
+  totalSteps: 6, // Owner, Basics, Categories, Payment, Documents, Subscription (Review is a modal)
   owner: {
     name: '',
     phoneLocal: '', // local number without country code, e.g. 9XXXXXXXX
@@ -28,7 +22,7 @@ const initialState = {
   name: '',
   description: '',
   category_ids: [],
-  payment_method: { name: '', account_number: '', account_holder: '', type: 'telebirr', details: '' },
+  payment_method: { name: '', account_number: '', account_holder: '', type: 'telebirr', details: {} },
   images: { cover_image: null, fayda_image: null, business_license_image: null },
   subscription_id: '',
   // owner_user_id removed - using bearer token instead
@@ -38,7 +32,7 @@ export const registerOwner = createAsyncThunk('vendor/registerOwner', async (_, 
   try {
     const { vendor: { owner } } = getState()
     const { name, password } = owner
-    const phone_number = formatEthiopian(owner.phoneLocal)
+    const phone_number = formatEthiopianPhone(owner.phoneLocal)
     await api.post(endpoints.registerOwner, { name, phone_number, password })
     return { info: 'OTP sent to your phone.' }
   } catch (e) { return rejectWithValue(e.message || 'Failed to register owner') }
@@ -48,7 +42,7 @@ export const verifyOtp = createAsyncThunk('vendor/verifyOtp', async (_, { getSta
   try {
     const { vendor: { owner } } = getState()
     const { code, password } = owner
-    const phone_number = formatEthiopian(owner.phoneLocal)
+    const phone_number = formatEthiopianPhone(owner.phoneLocal)
     await api.post(endpoints.verifyOtp, { phone_number, code })
     // silent login
     const data = await api.post(endpoints.login, { phone_number, password })
@@ -61,7 +55,7 @@ export const verifyOtp = createAsyncThunk('vendor/verifyOtp', async (_, { getSta
 export const resendOtp = createAsyncThunk('vendor/resendOtp', async (_, { getState, rejectWithValue }) => {
   try {
     const { vendor: { owner } } = getState()
-    const phone_number = formatEthiopian(owner.phoneLocal)
+    const phone_number = formatEthiopianPhone(owner.phoneLocal)
     await api.post(endpoints.resendOtp, { phone_number })
     return { info: 'Verification code resent.' }
   } catch (e) { return rejectWithValue(e.message || 'Failed to resend verification code') }

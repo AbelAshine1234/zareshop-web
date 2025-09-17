@@ -7,6 +7,7 @@ import { setPaymentMethod } from '../../features/vendor/vendorSlice'
 export default function PaymentStep({ onError }) {
   const vendor = useSelector(state => state.vendor)
   const dispatch = useDispatch()
+  const details = vendor.payment_method.details || {}
 
   return (
     <div className={styles.form}>
@@ -58,14 +59,39 @@ export default function PaymentStep({ onError }) {
         </div>
       </div>
       <div className={styles.formGroup}>
-        <label className={styles.label} htmlFor="payDetails">Details (optional)</label>
-        <textarea
-          id="payDetails"
-          className={styles.textarea}
-          placeholder="Any additional details or instructions"
-          value={vendor.payment_method.details}
-          onChange={e => dispatch(setPaymentMethod({ details: e.target.value }))}
-        />
+        <label className={styles.label}>Payment Details (optional)</label>
+        <div className={styles.row}>
+          <div className={styles.formGroup}>
+            <label className={styles.label} htmlFor="payProvider">Provider</label>
+            <input
+              id="payProvider"
+              className={styles.input}
+              placeholder="e.g. CBE Mobile"
+              value={details.provider || ''}
+              onChange={e => dispatch(setPaymentMethod({ details: { ...details, provider: e.target.value } }))}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label} htmlFor="payBranch">Branch</label>
+            <input
+              id="payBranch"
+              className={styles.input}
+              placeholder="e.g. Addis Ababa"
+              value={details.branch || ''}
+              onChange={e => dispatch(setPaymentMethod({ details: { ...details, branch: e.target.value } }))}
+            />
+          </div>
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label} htmlFor="payNotes">Notes</label>
+          <textarea
+            id="payNotes"
+            className={styles.textarea}
+            placeholder="Any additional details or instructions"
+            value={details.notes || ''}
+            onChange={e => dispatch(setPaymentMethod({ details: { ...details, notes: e.target.value } }))}
+          />
+        </div>
       </div>
 
       {/* Validation indicators */}

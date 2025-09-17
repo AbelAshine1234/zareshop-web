@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from '../VendorRegister.module.scss'
-import { api } from '../../api/api'
 import { setCategories } from '../../features/vendor/vendorSlice'
 
 export default function CategoryStep({ onError }) {
   const vendor = useSelector(state => state.vendor)
   const dispatch = useDispatch()
-  const [categories, setCategories] = useState([])
-  const [subcategories, setSubcategories] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [categories, setCategoriesState] = useState([])
   const [loading, setLoading] = useState(true)
-  const [subLoading, setSubLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -29,7 +25,7 @@ export default function CategoryStep({ onError }) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       const data = await response.json()
-      setCategories(data)
+      setCategoriesState(data)
     } catch (err) {
       console.error('Category fetch error:', err)
       setError('Failed to load categories. Please try again.')
@@ -39,44 +35,12 @@ export default function CategoryStep({ onError }) {
     }
   }
 
-  const fetchSubcategories = async (categoryId) => {
-    try {
-      setSubLoading(true)
-      // Use full URL for subcategories since they might not be under /api/
-      const baseUrl = import.meta.env.VITE_BASE_URL || 'http://localhost:4000'
-      const response = await fetch(`${baseUrl}/category/${categoryId}/subcategories`)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      setSubcategories(data)
-      setSelectedCategory(categoryId)
-    } catch (err) {
-      console.error('Subcategory fetch error:', err)
-      if (onError) onError('Failed to load subcategories')
-    } finally {
-      setSubLoading(false)
-    }
-  }
-
   const toggleCategory = (categoryId) => {
-    // If clicking the same category, deselect it
-    if (selectedCategory === categoryId) {
-      setSelectedCategory(null)
-      setSubcategories([])
-      dispatch(setCategories([]))
-      return
-    }
-
-    // Select new category and fetch subcategories
-    fetchSubcategories(categoryId)
-  }
-
-  const toggleSubcategory = (subcategoryId) => {
-    const exists = vendor.category_ids.includes(subcategoryId)
+    // Multi-select categories; update vendor.category_ids directly
+    const exists = vendor.category_ids.includes(categoryId)
     const updated = exists
-      ? vendor.category_ids.filter(x => x !== subcategoryId)
-      : [...vendor.category_ids, subcategoryId]
+      ? vendor.category_ids.filter(x => x !== categoryId)
+      : [...vendor.category_ids, categoryId]
     dispatch(setCategories(updated))
   }
 
@@ -113,10 +77,10 @@ export default function CategoryStep({ onError }) {
     <div className={styles.form}>
       <div className={styles.formGroup}>
         <div className={styles.small} style={{ marginBottom: 8 }}>
-          Select categories and subcategories that match your products.
+          Select one or more categories that match your products.
         </div>
 
-        {/* Main Categories */}
+        {/* Categories */}
         <div style={{ marginBottom: '24px' }}>
           <h4 style={{
             margin: '0 0 12px 0',
@@ -124,11 +88,11 @@ export default function CategoryStep({ onError }) {
             fontSize: '16px',
             fontWeight: '600'
           }}>
-            Choose a Category
+            Choose Categories
           </h4>
           <div className={styles.pills}>
             {categories.map((category) => {
-              const isSelected = selectedCategory === category.id
+              const isSelected = vendor.category_ids.includes(category.id)
               return (
                 <button
                   key={category.id}
@@ -153,57 +117,13 @@ export default function CategoryStep({ onError }) {
           </div>
         </div>
 
-        {/* Subcategories */}
-        {selectedCategory && (
-          <div>
-            <h4 style={{
-              margin: '0 0 12px 0',
-              color: '#374151',
-              fontSize: '16px',
-              fontWeight: '600'
-            }}>
-              Choose Subcategories
-              {subLoading && <span style={{ fontSize: '14px', color: '#6b7280', marginLeft: '8px' }}>Loading...</span>}
-            </h4>
-            <div className={styles.pills}>
-              {subcategories.map((subcategory) => {
-                const isSelected = vendor.category_ids.includes(subcategory.id)
-                return (
-                  <button
-                    key={subcategory.id}
-                    className={`${styles.pill} ${isSelected ? styles.pillActive : ''}`}
-                    onClick={() => toggleSubcategory(subcategory.id)}
-                  >
-                    {subcategory.name}
-                    {subcategory.images && subcategory.images.length > 0 && (
-                      <span style={{
-                        display: 'inline-block',
-                        width: '6px',
-                        height: '6px',
-                        backgroundColor: '#10b981',
-                        borderRadius: '50%',
-                        marginLeft: '4px'
-                      }} title="Has images"></span>
-                    )}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        )}
-
         {vendor.category_ids.length > 0 && (
           <div className={styles.small} style={{ marginTop: 16, color: '#065f46', fontWeight: '600' }}>
-            ✓ Selected: {vendor.category_ids.length} subcategories from {categories.find(c => c.id === selectedCategory)?.name}
-          </div>
-        )}
-
-        {!selectedCategory && (
-          <div className={styles.small} style={{ marginTop: 16, color: '#6b7280' }}>
-            Please select a category first to view subcategories.
+            ✓ Selected: {vendor.category_ids.length} categor{vendor.category_ids.length === 1 ? 'y' : 'ies'}
           </div>
         )}
       </div>
     </div>
   )
 }
+

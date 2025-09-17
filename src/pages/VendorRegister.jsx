@@ -6,10 +6,11 @@ import VendorBasicsStep from './steps/VendorBasicsStep'
 import CategoryStep from './steps/CategoryStep'
 import PaymentStep from './steps/PaymentStep'
 import VendorImageStep from './components/VendorImageStep'
-import ReviewStep from './steps/ReviewStep'
 import SubscriptionStep from './steps/SubscriptionStep'
 import OtpModal from './components/OtpModal'
 import CustomSelect from './components/CustomSelect'
+import { api } from '../api/api'
+import { vendorEndpoints } from '../api/api'
 import {
   nextStep,
   prevStep,
@@ -31,7 +32,6 @@ export default function VendorRegister() {
     'Categories',
     'Payment',
     'Documents',
-    'Review',
     'Subscription',
   ], [])
 
@@ -39,6 +39,10 @@ export default function VendorRegister() {
   const [showOtpModal, setShowOtpModal] = useState(false)
 
   // Image handling is now in VendorImageStep component
+  const [submitLoading, setSubmitLoading] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [submitInfo, setSubmitInfo] = useState('')
+  const [showUnderReview, setShowUnderReview] = useState(false)
 
   const handleNext = async () => {
     // Check if current step is complete before proceeding
@@ -92,9 +96,13 @@ export default function VendorRegister() {
       return
     }
 
-    // Handle final submission on step 7
-    if (vendor.step === 7) {
-      onSubmit()
+    // If on final step (Subscription), submit directly
+    if (vendor.step === 6) {
+      if (!isStepComplete(6)) {
+        dispatch(setOwnerField({ error: 'Please select a subscription plan.' }))
+        return
+      }
+      await onSubmit()
       return
     }
 
@@ -102,32 +110,39 @@ export default function VendorRegister() {
   }
 
   const onSubmit = async () => {
-    // For now, just log the payload; backend integration can map to your Prisma controller fields
-    // This will later be sent as multipart/form-data with images
-    console.log('Submitting vendor:', vendor)
-    
     // Prepare vendor data for submission
+    setSubmitError('')
+    setSubmitInfo('')
+    setSubmitLoading(true)
     const token = localStorage.getItem('authToken')
     if (!token) {
-      dispatch(setOwnerField({ error: 'Authentication required. Please login again.' }))
+      setSubmitError('Authentication required. Please login again.')
+      setSubmitLoading(false)
       return
     }
 
-    const vendorData = {
-      type: vendor.type,
-      name: vendor.name,
-      description: vendor.description,
-      category_ids: vendor.category_ids,
-      payment_method: vendor.payment_method,
-      subscription_id: vendor.subscription_id,
-      // Note: owner_user_id removed, using bearer token instead
-      // Images will be uploaded separately via Cloudinary
-    }
+    try {
+      const path = vendorEndpoints.create(vendor.type)
+      const form = new FormData()
+      form.append('type', vendor.type)
+      form.append('name', vendor.name || '')
+      form.append('description', vendor.description || '')
+      form.append('category_ids', JSON.stringify(vendor.category_ids || []))
+      form.append('payment_method', JSON.stringify(vendor.payment_method || {}))
+      form.append('subscription_id', vendor.subscription_id || '')
+      // Append images if available
+      if (vendor.images?.cover_image) form.append('cover_image', vendor.images.cover_image)
+      if (vendor.type === 'individual' && vendor.images?.fayda_image) form.append('fayda_image', vendor.images.fayda_image)
+      if (vendor.type === 'business' && vendor.images?.business_license_image) form.append('business_license_image', vendor.images.business_license_image)
 
-    console.log('Vendor data to submit:', vendorData)
-    console.log('Auth token available:', !!token)
-    
-    dispatch(setOwnerField({ info: 'Vendor registration data prepared. Ready for backend integration.' }))
+      await api.post(path, form, { headers: { Authorization: `Bearer ${token}` } })
+      setSubmitInfo('Vendor registered successfully. Your application is under review.')
+      setShowUnderReview(true)
+    } catch (e) {
+      setSubmitError(e.message || 'Failed to register vendor.')
+    } finally {
+      setSubmitLoading(false)
+    }
   }
 
   const isStepComplete = (stepNumber) => {
@@ -145,8 +160,6 @@ export default function VendorRegister() {
       case 5:
         return vendor.images.cover_image !== null
       case 6:
-        return true // Review step is always accessible
-      case 7:
         return vendor.subscription_id !== '' // Subscription must be selected
       default:
         return false
@@ -279,19 +292,14 @@ export default function VendorRegister() {
 
           {vendor.step === 6 && (
             <div>
-              <div className={styles.sectionTitle}>Review</div>
-              <ReviewStep onSubmit={onSubmit} />
-            </div>
-          )}
-
-          {vendor.step === 7 && (
-            <div>
               <div className={styles.sectionTitle}>Choose Subscription</div>
               <SubscriptionStep onError={handleError} onComplete={() => {}} />
               <div className={styles.divider} />
               <div className={styles.actions}>
                 <button className="button buttonGhost" onClick={() => dispatch(prevStep())}>Back</button>
-                <button className="button buttonPrimary" onClick={handleNext}>Complete Registration</button>
+                <button className="button buttonPrimary" onClick={handleNext} disabled={submitLoading}>
+                  {submitLoading ? 'Submitting...' : 'Submit Registration'}
+                </button>
               </div>
             </div>
           )}
@@ -301,6 +309,41 @@ export default function VendorRegister() {
           open={showOtpModal}
           onClose={handleOtpModalClose}
         />
+        {/* Full-screen loading overlay during submission */}
+        {submitLoading && (
+          <div className={styles.modalOverlay}>
+            <div className={styles.modal} role="dialog" aria-modal="true" aria-label="Submitting">
+              <div className={styles.modalHeader}>Submitting Registration</div>
+              <div className={styles.modalBody}>
+                <div className={styles.small}>Please wait while we create your vendor account...</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Under review success popup */}
+        {showUnderReview && (
+          <div className={styles.modalOverlay}>
+            <div className={styles.modal} role="dialog" aria-modal="true" aria-label="Under review">
+              <div className={styles.modalHeader}>Application Submitted</div>
+              <div className={styles.modalBody}>
+                <div className={styles.small} style={{ color: '#065f46' }}>
+                  Your vendor application has been received and is under review.
+                  Admin approval may take up to 24 hours. We will notify you once approved.
+                </div>
+                {submitError && (
+                  <div className={styles.small} style={{ color: '#b91c1c', marginTop: 12 }}>{submitError}</div>
+                )}
+                {submitInfo && (
+                  <div className={styles.small} style={{ color: '#065f46', marginTop: 12 }}>{submitInfo}</div>
+                )}
+              </div>
+              <div className={styles.modalFooter}>
+                <button className={styles.miniBtn} onClick={() => setShowUnderReview(false)}>Close</button>
+              </div>
+            </div>
+          </div>
+        )}
         </div>
       </div>
     </section>
