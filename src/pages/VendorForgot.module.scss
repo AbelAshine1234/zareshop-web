@@ -1,0 +1,42 @@
+.containerCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.progressCard {
+  padding: 0;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 4px;
+  background: #e5e7eb;
+}
+
+.progressFill0 {
+  width: 0%;
+}
+.progressFill50 {
+  width: 50%;
+}
+.progressFill100 {
+  width: 100%;
+}
+.progressFill {
+  height: 100%;
+  background: #10b981;
+  transition: width 200ms;
+}
+
+.cardPadding {
+  padding: 20px;
+}
+
+.footerHelp {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.successText {
+  color: #065f46;
+}

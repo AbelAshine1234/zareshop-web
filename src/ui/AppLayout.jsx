@@ -19,7 +19,7 @@ export default function AppLayout() {
           <nav className={styles.navActions}>
             <NavLink to="/" className="button buttonGhost">Home</NavLink>
             <NavLink to="/products" className="button buttonGhost">Products</NavLink>
-            <NavLink to="/vendor/register" className="button buttonGhost">Register as Vendor</NavLink>
+            <NavLink to="/vendor" className="button buttonGhost">Vendor Account</NavLink>
             <NavLink to="/cart" className="button buttonPrimary">Cart</NavLink>
           </nav>
         </div>

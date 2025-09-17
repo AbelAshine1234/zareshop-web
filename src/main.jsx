@@ -16,6 +16,9 @@ import Register from './pages/Register.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 import AddProductForm from './pages/AddProductForm.jsx'
 import VendorRegister from './pages/VendorRegister.jsx'
+import VendorAccount from './pages/VendorAccount.jsx'
+import VendorAnalytics from './pages/VendorAnalytics.jsx'
+import VendorForgot from './pages/VendorForgot.jsx'
 import store from './store/store'
 
 const router = createBrowserRouter([
@@ -33,6 +36,9 @@ const router = createBrowserRouter([
       { path: 'register', element: <Register /> },
       { path: 'admin', element: <AdminDashboard /> },
       { path: 'admin/products/new', element: <AddProductForm /> },
+      { path: 'vendor', element: <VendorAccount /> },
+      { path: 'vendor/analytics', element: <VendorAnalytics /> },
+      { path: 'vendor/forgot', element: <VendorForgot /> },
       { path: 'vendor/register', element: <VendorRegister /> },
     ],
   },
