@@ -1,0 +1,40 @@
+.container { display: flex; justify-content: center; }
+.wrap { max-width: 1100px; width: 100%; display: flex; flex-direction: column; gap: 16px; }
+.header { display: flex; align-items: center; justify-content: space-between; }
+.title { font-size: 24px; font-weight: 800; color: #0f172a; }
+.actions { display: flex; gap: 8px; }
+
+.card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; }
+.sectionTitle { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 12px; }
+.small { font-size: 12px; color: #6b7280; }
+
+.gridStats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.statCard { border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.statLabel { color: #6b7280; font-size: 12px; font-weight: 600; }
+.statValue { font-size: 28px; font-weight: 800; margin-top: 8px; }
+
+.salesChart { display: flex; gap: 8px; align-items: flex-end; height: 140px; }
+.barWrap { display: flex; flex-direction: column; align-items: center; }
+.bar { width: 24px; border-radius: 6px; background: #10b981; }
+.barLabel { margin-top: 6px; }
+
+.tableWrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; }
+.theadRow { text-align: left; border-bottom: 1px solid #e5e7eb; }
+.tbodyRow { border-bottom: 1px solid #f3f4f6; }
+.th, .td { padding: 8px 4px; }
+
+.gridCards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.productCard { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; }
+.productName { font-weight: 700; color: #111827; }
+.muted { color: #6b7280; }
+.ok { color: #065f46; }
+.warn { color: #b45309; }
+
+.integrations { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.integrationCard { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; }
+.integrationOk { background: #f0fdf4; }
+.integrationBad { background: #fef2f2; }
+.integrationTitle { font-weight: 700; color: #111827; }
+.integrationStatusOk { color: #065f46; font-size: 12px; font-weight: 600; }
+.integrationStatusBad { color: #991b1b; font-size: 12px; font-weight: 600; }

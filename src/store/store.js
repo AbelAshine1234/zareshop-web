@@ -2,12 +2,16 @@ import { configureStore } from '@reduxjs/toolkit'
 import vendorReducer from '../features/vendor/vendorSlice'
 import categoriesReducer from '../features/categories/categoriesSlice'
 import authReducer from '../features/auth/authSlice'
+import vendorProductsReducer from '../features/products/vendorProductsSlice'
+import loadingReducer from '../features/ui/loadingSlice'
 
 export const store = configureStore({
   reducer: {
     vendor: vendorReducer,
     categories: categoriesReducer,
     auth: authReducer,
+    vendorProducts: vendorProductsReducer,
+    loading: loadingReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

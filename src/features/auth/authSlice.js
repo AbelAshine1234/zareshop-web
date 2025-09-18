@@ -20,6 +20,19 @@ const initialState = {
   }
 }
 
+// Load current authenticated user ("me")
+export const fetchMe = createAsyncThunk('auth/fetchMe', async (_arg, { getState, rejectWithValue }) => {
+  try {
+    const state = getState()
+    const token = state.auth?.token
+    if (!token) return rejectWithValue('Not authenticated')
+    const me = await api.get('/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+    return me
+  } catch (e) {
+    return rejectWithValue(e.message || 'Failed to load user')
+  }
+})
+
 export const login = createAsyncThunk('auth/login', async (payload, { rejectWithValue }) => {
   try {
     // payload may contain { identifier, password, isPhone }
@@ -85,6 +98,10 @@ const authSlice = createSlice({
       .addCase(login.pending, (state) => { state.loading = true; state.error = ''; state.info = '' })
       .addCase(login.fulfilled, (state, action) => { state.loading = false; state.token = action.payload.token; state.info = 'Logged in' })
       .addCase(login.rejected, (state, action) => { state.loading = false; state.error = action.payload })
+      // fetchMe
+      .addCase(fetchMe.pending, (state) => { state.loading = true; state.error = ''; state.info = '' })
+      .addCase(fetchMe.fulfilled, (state, action) => { state.loading = false; state.user = action.payload })
+      .addCase(fetchMe.rejected, (state, action) => { state.loading = false; state.error = action.payload })
       // forgot
       .addCase(forgotPassword.pending, (state) => { state.fp.loading = true; state.fp.error = ''; state.fp.info = '' })
       .addCase(forgotPassword.fulfilled, (state, action) => { state.fp.loading = false; state.fp.info = action.payload.info; state.fp.step = 2 })
@@ -101,4 +118,13 @@ const authSlice = createSlice({
 })
 
 export const { logout, clearAuthMessages, setForgotStep, setForgotPhone, setForgotOtp, clearForgot } = authSlice.actions
+
+// Selector to check if current user has an approved vendor
+export const selectIsVendorApproved = (state) => {
+  const me = state.auth?.user
+  if (!me) return false
+  const v = me?.vendor || me?.user?.vendor || {}
+  return Boolean((me?.vendorStatus === 'approved') || (v?.isApproved === true && v?.status === true) || (v?.is_approved === true && v?.status === true))
+}
+
 export default authSlice.reducer
