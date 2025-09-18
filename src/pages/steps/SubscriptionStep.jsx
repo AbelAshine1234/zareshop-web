@@ -213,8 +213,8 @@ export default function SubscriptionStep({ onError, onComplete }) {
             borderRadius: '8px'
           }}>
             <div className={styles.small} style={{ color: '#065f46', fontWeight: '600' }}>
-              ✓ Selected: {getSelectedSubscription().name}
-              {getSelectedSubscription().price && ` - $${getSelectedSubscription().price}`}
+              ✓ Selected: {getSelectedSubscription().plan}
+              {typeof getSelectedSubscription().amount !== 'undefined' && ` - $${getSelectedSubscription().amount}`}
             </div>
           </div>
         )}

@@ -2,15 +2,14 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from '../VendorRegister.module.scss'
 import { setOwnerField, resendOtp } from '../../features/vendor/vendorSlice'
+import { validateEthiopianPhone } from '../../utils/phoneUtils'
 
 export default function OwnerRegisterStep() {
   const owner = useSelector(state => state.vendor.owner)
   const dispatch = useDispatch()
 
   const validatePhone = (phone) => {
-    // Ethiopian phone numbers should start with 9 and be 9 digits total
-    const phoneRegex = /^9\d{8}$/
-    return phoneRegex.test(phone)
+    return validateEthiopianPhone(phone)
   }
 
   const handlePhoneChange = (e) => {
