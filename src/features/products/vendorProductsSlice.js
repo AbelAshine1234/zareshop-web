@@ -34,14 +34,9 @@ export const createProduct = createAsyncThunk('vendorProducts/createProduct', as
     fd.append('category_id', String(formValues.category_id))
     fd.append('subcategory_id', String(formValues.subcategory_id))
 
-    // Specs: array of {key, value} as specs[i][key], specs[i][value]
-    if (Array.isArray(formValues.specs) && formValues.specs.length > 0) {
-      formValues.specs.forEach((sp, i) => {
-        if (sp && (sp.key || sp.value)) {
-          if (typeof sp.key !== 'undefined') fd.append(`specs[${i}][key]`, String(sp.key))
-          if (typeof sp.value !== 'undefined') fd.append(`specs[${i}][value]`, String(sp.value))
-        }
-      })
+    // Specs: backend expects JSON string via jsonFieldsParser(['specs'])
+    if (Array.isArray(formValues.specs)) {
+      fd.append('specs', JSON.stringify(formValues.specs))
     }
 
     // Files
@@ -90,12 +85,7 @@ export const updateProduct = createAsyncThunk('vendorProducts/updateProduct', as
     if (typeof values.subcategory_id !== 'undefined') fd.append('subcategory_id', String(values.subcategory_id))
 
     if (Array.isArray(values.specs)) {
-      values.specs.forEach((sp, i) => {
-        if (sp && (sp.key || sp.value)) {
-          if (typeof sp.key !== 'undefined') fd.append(`specs[${i}][key]`, String(sp.key))
-          if (typeof sp.value !== 'undefined') fd.append(`specs[${i}][value]`, String(sp.value))
-        }
-      })
+      fd.append('specs', JSON.stringify(values.specs))
     }
 
     if (values.images && values.images.length) {
@@ -105,8 +95,8 @@ export const updateProduct = createAsyncThunk('vendorProducts/updateProduct', as
       Array.from(values.videos).forEach((file) => fd.append('videos', file))
     }
 
-    const data = await api.post(`/products/${id}?_method=PUT`, fd, { headers })
-    // Using POST with _method override for fetch API convenience; backend supports PUT with multer
+    const data = await api.put(`/products/${id}`, fd, { headers })
+    // Use real PUT to match Express route
     return data
   } catch (e) {
     return rejectWithValue(e.message || 'Failed to update product')
@@ -119,11 +109,70 @@ export const deleteProduct = createAsyncThunk('vendorProducts/deleteProduct', as
     const state = getState()
     const token = state.auth?.token
     const headers = token ? { Authorization: `Bearer ${token}` } : {}
-    // Simple fetch override since api helper lacks delete; reuse post with method override
-    const data = await api.post(`/products/${id}?_method=DELETE`, {}, { headers })
+    const data = await api.delete(`/products/${id}`, { headers })
     return { id, data }
   } catch (e) {
     return rejectWithValue(e.message || 'Failed to delete product')
+  }
+})
+
+// Add/update product images (vendor owner route)
+export const updateProductImages = createAsyncThunk('vendorProducts/updateProductImages', async ({ id, images }, { getState, rejectWithValue }) => {
+  try {
+    const state = getState()
+    const token = state.auth?.token
+    const headers = token ? { Authorization: `Bearer ${token}` } : {}
+    const fd = new FormData()
+    if (images && images.length) {
+      Array.from(images).forEach((file) => fd.append('images', file))
+    }
+    const data = await api.put(`/products/${id}/images`, fd, { headers })
+    return { id, data }
+  } catch (e) {
+    return rejectWithValue(e.message || 'Failed to update product images')
+  }
+})
+
+// Delete specific product image (vendor owner route)
+export const deleteProductImage = createAsyncThunk('vendorProducts/deleteProductImage', async ({ id, imageId }, { getState, rejectWithValue }) => {
+  try {
+    const state = getState()
+    const token = state.auth?.token
+    const headers = token ? { Authorization: `Bearer ${token}` } : {}
+    const data = await api.delete(`/products/${id}/images/${imageId}`, { headers })
+    return { id, imageId, data }
+  } catch (e) {
+    return rejectWithValue(e.message || 'Failed to delete product image')
+  }
+})
+
+// Add/update product videos (vendor owner route)
+export const updateProductVideos = createAsyncThunk('vendorProducts/updateProductVideos', async ({ id, videos }, { getState, rejectWithValue }) => {
+  try {
+    const state = getState()
+    const token = state.auth?.token
+    const headers = token ? { Authorization: `Bearer ${token}` } : {}
+    const fd = new FormData()
+    if (videos && videos.length) {
+      Array.from(videos).forEach((file) => fd.append('videos', file))
+    }
+    const data = await api.put(`/products/${id}/videos`, fd, { headers })
+    return { id, data }
+  } catch (e) {
+    return rejectWithValue(e.message || 'Failed to update product videos')
+  }
+})
+
+// Delete specific product video (vendor owner route)
+export const deleteProductVideo = createAsyncThunk('vendorProducts/deleteProductVideo', async ({ id, videoId }, { getState, rejectWithValue }) => {
+  try {
+    const state = getState()
+    const token = state.auth?.token
+    const headers = token ? { Authorization: `Bearer ${token}` } : {}
+    const data = await api.delete(`/products/${id}/videos/${videoId}`, { headers })
+    return { id, videoId, data }
+  } catch (e) {
+    return rejectWithValue(e.message || 'Failed to delete product video')
   }
 })
 
@@ -192,8 +241,53 @@ const vendorProductsSlice = createSlice({
         state.current = null
       })
       .addCase(deleteProduct.rejected, (state, action) => { state.deleting = false; state.deleteError = action.payload })
+
+      // update product images
+      .addCase(updateProductImages.pending, (state) => { state.updating = true; state.updateError = '' })
+      .addCase(updateProductImages.fulfilled, (state, action) => {
+        state.updating = false
+        const images = action.payload?.data?.images
+        if (state.current && Array.isArray(images)) {
+          state.current.images = images
+        }
+      })
+      .addCase(updateProductImages.rejected, (state, action) => { state.updating = false; state.updateError = action.payload })
+
+      // delete product image
+      .addCase(deleteProductImage.pending, (state) => { state.updating = true; state.updateError = '' })
+      .addCase(deleteProductImage.fulfilled, (state, action) => {
+        state.updating = false
+        const imgId = action.payload?.imageId
+        if (state.current && imgId) {
+          state.current.images = (state.current.images || []).filter(img => img.id !== imgId)
+        }
+      })
+      .addCase(deleteProductImage.rejected, (state, action) => { state.updating = false; state.updateError = action.payload })
+
+      // update product videos
+      .addCase(updateProductVideos.pending, (state) => { state.updating = true; state.updateError = '' })
+      .addCase(updateProductVideos.fulfilled, (state, action) => {
+        state.updating = false
+        const videos = action.payload?.data?.videos
+        if (state.current && Array.isArray(videos)) {
+          state.current.videos = videos
+        }
+      })
+      .addCase(updateProductVideos.rejected, (state, action) => { state.updating = false; state.updateError = action.payload })
+
+      // delete product video
+      .addCase(deleteProductVideo.pending, (state) => { state.updating = true; state.updateError = '' })
+      .addCase(deleteProductVideo.fulfilled, (state, action) => {
+        state.updating = false
+        const vidId = action.payload?.videoId
+        if (state.current && vidId) {
+          state.current.videos = (state.current.videos || []).filter(vid => vid.id !== vidId)
+        }
+      })
+      .addCase(deleteProductVideo.rejected, (state, action) => { state.updating = false; state.updateError = action.payload })
   }
-})
+}
+)
 
 export const { clearCreateState } = vendorProductsSlice.actions
 export default vendorProductsSlice.reducer

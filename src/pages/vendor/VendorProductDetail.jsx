@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import s from './VendorProductDetail.module.scss'
 import { fetchCategories, fetchSubcategories } from '../../features/categories/categoriesSlice'
-import { fetchProductById, updateProduct, deleteProduct } from '../../features/products/vendorProductsSlice'
+import { fetchProductById, updateProduct, deleteProduct, updateProductImages, deleteProductImage, updateProductVideos, deleteProductVideo } from '../../features/products/vendorProductsSlice'
 import { showLoading, hideLoading } from '../../features/ui/loadingSlice'
+import ConfirmModal from '../../ui/ConfirmModal'
 
 export default function VendorProductDetail() {
   const { id } = useParams()
@@ -32,6 +33,8 @@ export default function VendorProductDetail() {
 
   const imagesInputRef = useRef(null)
   const videosInputRef = useRef(null)
+
+  const [confirm, setConfirm] = useState({ open: false, type: '', targetId: null })
 
   useEffect(() => {
     if (!id) return
@@ -128,7 +131,15 @@ export default function VendorProductDetail() {
   return (
     <section className={s.container}>
       <div className={s.wrap}>
-        <h1 className={s.title}>Edit Product</h1>
+        <div className={s.pageHeader}>
+          <div className={s.left}>
+            <button className={s.backBtn} onClick={() => navigate('/vendor/products')}>
+              <span>←</span><span>Back</span>
+            </button>
+            <div className={s.pageTitle}>Edit Product</div>
+          </div>
+          <div className={s.actions} />
+        </div>
         <div className={s.card}>
           {(updateError || deleteError) && <div className={s.error}>{updateError || deleteError}</div>}
           <form onSubmit={handleSave}>
@@ -165,17 +176,19 @@ export default function VendorProductDetail() {
               </div>
             </div>
 
-            <div className={s.card} style={{ border: 'none', padding: 0, marginTop: 10 }}>
+            <div className={`${s.card} ${s.mt4}`}>
               <div className={s.small}>Existing Media</div>
               <div className={s.mediaGrid}>
                 {(current.images || []).map((img, idx) => (
                   <div className={s.thumb} key={`img-${idx}`}>
                     <img className={s.thumbImg} src={img.image_url || img.url || img} alt={`img-${idx}`} />
+                    <button type="button" className={s.pillBtn} onClick={() => setConfirm({ open: true, type: 'image', targetId: img.id })}>Delete</button>
                   </div>
                 ))}
                 {(current.videos || []).map((vid, idx) => (
                   <div className={s.thumb} key={`vid-${idx}`}>
                     <video className={s.thumbImg} src={vid.video_url || vid.url || vid} controls />
+                    <button type="button" className={s.pillBtn} onClick={() => setConfirm({ open: true, type: 'video', targetId: vid.id })}>Delete</button>
                   </div>
                 ))}
               </div>
@@ -186,6 +199,15 @@ export default function VendorProductDetail() {
               <div className={s.inlineRow}>
                 <button type="button" className={`${s.pillBtn} ${s.pillBtnPrimary}`} onClick={() => imagesInputRef.current?.click()}>Choose Images</button>
                 <div className={s.small}>Selected: {form.images?.length || 0}</div>
+                <button type="button" className={s.pillBtn} disabled={!form.images || form.images.length===0}
+                  onClick={async ()=>{
+                    try {
+                      await dispatch(updateProductImages({ id, images: form.images })).unwrap()
+                      setForm(prev => ({ ...prev, images: [] }))
+                      imagesInputRef.current && (imagesInputRef.current.value = '')
+                    } catch (_) {}
+                  }}
+                >Upload Images</button>
               </div>
               <input ref={imagesInputRef} className={s.hiddenFile} type="file" accept="image/*" multiple onChange={onImagesChange} />
             </div>
@@ -195,11 +217,20 @@ export default function VendorProductDetail() {
               <div className={s.inlineRow}>
                 <button type="button" className={`${s.pillBtn} ${s.pillBtnPrimary}`} onClick={() => videosInputRef.current?.click()}>Choose Videos</button>
                 <div className={s.small}>Selected: {form.videos?.length || 0}</div>
+                <button type="button" className={s.pillBtn} disabled={!form.videos || form.videos.length===0}
+                  onClick={async ()=>{
+                    try {
+                      await dispatch(updateProductVideos({ id, videos: form.videos })).unwrap()
+                      setForm(prev => ({ ...prev, videos: [] }))
+                      videosInputRef.current && (videosInputRef.current.value = '')
+                    } catch (_) {}
+                  }}
+                >Upload Videos</button>
               </div>
               <input ref={videosInputRef} className={s.hiddenFile} type="file" accept="video/*" multiple onChange={onVideosChange} />
             </div>
 
-            <div className={s.card} style={{ border: 'none', padding: 0, marginTop: 10 }}>
+            <div className={`${s.card} ${s.mt4}`}>
               <div className={s.small}>Specifications</div>
               {form.specs.map((sp, idx) => (
                 <div key={idx} className={s.gridTwo}>
@@ -223,6 +254,25 @@ export default function VendorProductDetail() {
             </div>
           </form>
         </div>
+        <ConfirmModal
+          open={confirm.open}
+          title={confirm.type === 'image' ? 'Delete image?' : 'Delete video?'}
+          message={'This action cannot be undone.'}
+          confirmText={'Delete'}
+          danger
+          onCancel={() => setConfirm({ open: false, type: '', targetId: null })}
+          onConfirm={async () => {
+            try {
+              if (confirm.type === 'image') {
+                await dispatch(deleteProductImage({ id, imageId: confirm.targetId })).unwrap()
+              } else if (confirm.type === 'video') {
+                await dispatch(deleteProductVideo({ id, videoId: confirm.targetId })).unwrap()
+              }
+            } finally {
+              setConfirm({ open: false, type: '', targetId: null })
+            }
+          }}
+        />
       </div>
     </section>
   )

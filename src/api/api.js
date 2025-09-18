@@ -22,6 +22,8 @@ async function request(path, { method = 'GET', body, headers = {} } = {}) {
 export const api = {
   get: (path, options = {}) => request(path, { method: 'GET', ...options }),
   post: (path, body, options = {}) => request(path, { method: 'POST', body, ...options }),
+  put: (path, body, options = {}) => request(path, { method: 'PUT', body, ...options }),
+  delete: (path, options = {}) => request(path, { method: 'DELETE', ...options }),
 }
 
 // Auth endpoints used by Vendor Owner onboarding

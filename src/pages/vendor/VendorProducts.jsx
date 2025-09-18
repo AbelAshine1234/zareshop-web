@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import s from './VendorAnalytics.module.scss'
 import { fetchMyProducts } from '../../features/products/vendorProductsSlice'
 
 export default function VendorProducts() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { items, loading, error, pagination } = useSelector(s2 => s2.vendorProducts)
 
   useEffect(() => {
@@ -15,8 +16,13 @@ export default function VendorProducts() {
   return (
     <section className={s.container}>
       <div className={s.wrap}>
-        <div className={s.header}>
-          <h1 className={s.title}>Products</h1>
+        <div className={s.pageHeader}>
+          <div className={s.left}>
+            <button className={s.backBtn} onClick={() => navigate('/vendor')}>
+              <span>←</span><span>Back</span>
+            </button>
+            <div className={s.pageTitle}>Products</div>
+          </div>
           <div className={s.actions}>
             <Link className={`${s.btn} ${s.btnPrimary}`} to="/vendor/products/new">Add Product</Link>
           </div>
@@ -46,11 +52,11 @@ export default function VendorProducts() {
                       <td className={s.td}>{p.name}</td>
                       <td className={s.td}>{p.category?.name || '-'}</td>
                       <td className={s.td}>{p.stock}</td>
-                      <td className={s.td}>{Array.isArray(p.images) ? p.images.length : 0}</td>
-                      <td className={s.td}>{Array.isArray(p.videos) ? p.videos.length : 0}</td>
+                      <td className={s.td}><span className={s.badge}>🖼 {Array.isArray(p.images) ? p.images.length : 0}</span></td>
+                      <td className={s.td}><span className={s.badge}>🎬 {Array.isArray(p.videos) ? p.videos.length : 0}</span></td>
                       <td className={s.td}>{p.created_at ? new Date(p.created_at).toLocaleDateString() : '-'}</td>
                       <td className={s.td}>
-                        <Link className={`${s.btn} ${s.btnPrimary}`} to={`/vendor/products/${p.id}`}>Manage</Link>
+                        <Link className={`${s.btn} ${s.btnPrimary} ${s.btnSm}`} to={`/vendor/products/${p.id}`}>Manage</Link>
                       </td>
                     </tr>
                   ))}

@@ -128,8 +128,14 @@ export default function VendorProductCreate() {
   return (
     <section className={s.container}>
       <div className={s.wrap}>
-        <div className={s.header}>
-          <h1 className={s.title}>Create Product</h1>
+        <div className={s.pageHeader}>
+          <div className={s.left}>
+            <button className={s.backBtn} onClick={() => navigate('/vendor/products')}>
+              <span>←</span><span>Back</span>
+            </button>
+            <div className={s.pageTitle}>Create Product</div>
+          </div>
+          <div className={s.actions} />
         </div>
 
         <div className={s.card}>

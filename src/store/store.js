@@ -3,6 +3,7 @@ import vendorReducer from '../features/vendor/vendorSlice'
 import categoriesReducer from '../features/categories/categoriesSlice'
 import authReducer from '../features/auth/authSlice'
 import vendorProductsReducer from '../features/products/vendorProductsSlice'
+import clientProductsReducer from '../features/products/clientProductsSlice'
 import loadingReducer from '../features/ui/loadingSlice'
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     auth: authReducer,
     vendorProducts: vendorProductsReducer,
     loading: loadingReducer,
+    clientProducts: clientProductsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

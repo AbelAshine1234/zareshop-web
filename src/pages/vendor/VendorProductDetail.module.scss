@@ -17,3 +17,9 @@
 .gridTwo { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
 .row { display: flex; flex-direction: column; gap: 6px; }
 .mt4 { margin-top: 4px; }
+
+/* Page header + back button so it doesn't look default */
+.pageHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.left { display: flex; align-items: center; gap: 10px; }
+.backBtn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #a7f3d0; background: #fff; color: #065f46; border-radius: 999px; padding: 8px 12px; font-weight: 700; cursor: pointer; }
+.pageTitle { font-size: 26px; font-weight: 900; letter-spacing: .2px; color: #065f46; }
