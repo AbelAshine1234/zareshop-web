@@ -30,6 +30,7 @@ export default function AppLayout() {
               {!isVendorLoggedIn && (
                 <>
                   <NavLink to="/products" className="button buttonGhost">Products</NavLink>
+                  <NavLink to="/vendors/buy" className="button buttonGhost">Buy from Vendors</NavLink>
                   <NavLink to="/vendor" className="button buttonGhost">Vendor Account</NavLink>
                   <NavLink to="/cart" className="button buttonPrimary">Cart</NavLink>
                 </>

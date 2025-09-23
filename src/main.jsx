@@ -8,6 +8,8 @@ import AppLayout from './ui/AppLayout.jsx'
 import HomeOrAnalytics from './pages/HomeOrAnalytics.jsx'
 import HomePage from './pages/HomePage.jsx'
 import ProductList from './pages/ProductList.jsx'
+import BuyFromVendors from './pages/BuyFromVendors.jsx'
+import VendorDetail from './pages/VendorDetail.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
@@ -52,6 +54,8 @@ const router = createBrowserRouter([
       { path: 'admin', element: <AdminDashboard /> },
       { path: 'admin/products/new', element: <AddProductForm /> },
       { path: 'support', element: <Support /> },
+      { path: 'vendors/buy', element: <BuyFromVendors /> },
+      { path: 'vendors/:id', element: <VendorDetail /> },
       { path: 'vendor/wait', element: <WaitApproval /> },
       // Dedicated client home to bypass HomeOrAnalytics vendor redirect
       { path: 'client', element: <HomePage /> },

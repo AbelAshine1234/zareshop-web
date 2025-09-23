@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from '../VendorRegister.module.scss'
-import { setOwnerField, verifyOtp, resendOtp } from '../../features/vendor/vendorSlice'
+import { setOwnerField, verifyOtp, resendOtp, nextStep } from '../../features/vendor/vendorSlice'
 
 export default function OtpModal({ open, onClose }) {
   const dispatch = useDispatch()
@@ -18,7 +18,9 @@ export default function OtpModal({ open, onClose }) {
 
     try {
       await dispatch(verifyOtp()).unwrap()
-      onClose() // Close modal on success
+      // Advance to the next registration step (Basics) and close the modal
+      dispatch(nextStep())
+      onClose()
     } catch (error) {
       // Error is handled in slice state
     }

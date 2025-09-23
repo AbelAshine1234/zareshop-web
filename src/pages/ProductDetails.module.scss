@@ -1,7 +1,32 @@
-.wrapper { padding: 48px 0; }
-.grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-@media (min-width: 900px){ .grid { grid-template-columns: 1fr 1fr; } }
-.title { font-size: 26px; font-weight: 800; color: #064e3b; margin-bottom: 8px; }
-.price { color: var(--brand-700); font-weight: 700; margin-bottom: 16px; }
-.desc { color: #0b6b57; line-height: 1.6; }
-.actions { display: flex; gap: 10px; margin-top: 16px; }
+.wrapper { padding: 40px 0; }
+.grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 960px){ .grid { grid-template-columns: 1.2fr 1fr; align-items: start; } }
+
+/* Gallery */
+.gallery { display: grid; gap: 12px; }
+.mainImgWrap { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 10px; }
+.mainImg { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 12px; }
+.thumbs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.thumb { border: 2px solid transparent; border-radius: 10px; overflow: hidden; cursor: pointer; }
+.thumb img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+.activeThumb { border-color: #10b981; }
+
+/* Info */
+.title { font-size: 28px; font-weight: 900; color: #064e3b; margin-bottom: 6px; }
+.badgeRow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+.price { color: #065f46; font-weight: 900; font-size: 22px; margin: 10px 0 14px; }
+.desc { color: #0b6b57; line-height: 1.7; }
+
+.metaRows { display: grid; gap: 6px; margin-top: 16px; color: #0f172a; }
+.specs { margin-top: 18px; }
+.h3 { font-size: 16px; font-weight: 800; color: #065f46; margin-bottom: 8px; }
+.specs ul { padding-left: 18px; color: #374151; }
+
+/* Buy Box */
+.buyBox { display: grid; gap: 12px; margin-top: 18px; padding: 14px; border: 1px solid #d1fae5; border-radius: 14px; background: #fff; }
+.qtyRow { display: flex; align-items: center; gap: 12px; }
+.qty { display: inline-flex; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; }
+.qty button { background: #f8fafc; border: none; padding: 8px 12px; cursor: pointer; font-weight: 700; }
+.qty input { width: 60px; text-align: center; border: none; outline: none; padding: 8px 0; }
+.actions { display: flex; gap: 10px; margin-top: 6px; }

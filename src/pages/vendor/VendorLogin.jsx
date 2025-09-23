@@ -64,6 +64,7 @@ export default function VendorLogin() {
               <button className="button buttonPrimary" type="submit" disabled={loading}>
                 {loading ? 'Logging in...' : 'Login'}
               </button>
+              <NavLink to="/vendor/register" className="button buttonGhost">Register as Vendor</NavLink>
               <NavLink to="/vendor/forgot" className="button buttonGhost">Forgot Password?</NavLink>
             </div>
           </VendorLoginForm>

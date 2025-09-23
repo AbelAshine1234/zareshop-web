@@ -5,6 +5,7 @@ import authReducer from '../features/auth/authSlice'
 import vendorProductsReducer from '../features/products/vendorProductsSlice'
 import clientProductsReducer from '../features/products/clientProductsSlice'
 import loadingReducer from '../features/ui/loadingSlice'
+import cartReducer from '../features/cart/cartSlice'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     auth: authReducer,
     vendorProducts: vendorProductsReducer,
     loading: loadingReducer,
+    cart: cartReducer,
     clientProducts: clientProductsReducer,
   },
   middleware: (getDefaultMiddleware) =>
