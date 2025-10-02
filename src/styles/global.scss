@@ -1,29 +1,6 @@
 /* Global styles and variables - Avito.ru clean white theme */
-:root {
-  /* Clean white/gray palette like Avito */
-  --avito-blue: #0080ff; /* Avito blue accent */
-  --avito-blue-light: #f0f8ff;
-  --avito-gray-100: #f8f9fa;
-  --avito-gray-200: #e9ecef;
-  --avito-gray-300: #dee2e6;
-  --avito-gray-400: #adb5bd;
-  --avito-gray-500: #6c757d;
-  --avito-gray-600: #495057;
-  --avito-gray-700: #343a40;
-  --avito-gray-800: #212529;
-  --avito-dark: #2c3e50; /* Dark nav color */
-  --avito-accent: #ff6b35; /* Orange accent */
-  
-  /* Semantic colors */
-  --brand-primary: var(--avito-blue);
-  --brand-primary-hover: #0066cc;
-  --brand-secondary: var(--avito-gray-200);
-  --brand-background: #ffffff;
-  --brand-text: var(--avito-gray-700);
-  --brand-muted: var(--avito-gray-500);
-  --brand-border: var(--avito-gray-200);
-  --brand-shadow: rgba(0, 0, 0, 0.08);
-}
+@import './theme.scss';
+:root {}
 
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; }
@@ -31,7 +8,7 @@ html, body, #root { height: 100%; }
 html { background: var(--brand-background); }
 body { 
   margin: 0; 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Arial', sans-serif; 
+  font-family: var(--font-sans); 
   color: var(--brand-text); 
   background: var(--brand-background);
   line-height: 1.5;

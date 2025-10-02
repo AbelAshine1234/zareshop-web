@@ -1,0 +1,58 @@
+/* Design tokens: colors, typography, radii, shadows */
+:root {
+  /* Brand palette */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+
+  /* Accents and semantic */
+  --color-accent: #06b6d4;
+  --color-success: #22c55e;
+  --color-info: #0ea5e9;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* Neutrals */
+  --color-white: #ffffff;
+  --color-light: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-muted: #64748b;
+  --color-text: #334155;
+  --color-dark: #1e293b;
+  --color-overlay: rgba(0,0,0,0.08);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-alt: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+
+  /* Shadows */
+  --shadow-brand: 0 1px 3px rgba(34, 197, 94, 0.2);
+  --shadow-brand-lg: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+/* Aliases for legacy tokens used in global.scss */
+:root {
+  --brand-primary: var(--color-brand-500);
+  --brand-primary-hover: var(--color-brand-600);
+  --brand-secondary: var(--color-brand-100);
+  --brand-background: var(--color-white);
+  --brand-text: var(--color-text);
+  --brand-muted: var(--color-muted);
+  --brand-border: var(--color-border);
+  --brand-shadow: var(--color-overlay);
+}
+
