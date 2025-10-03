@@ -3,9 +3,19 @@
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL || ''
 
-async function request(path, { method = 'GET', body, headers = {} } = {}) {
+function getAuthToken() {
+  try {
+    return localStorage.getItem('authToken') || null
+  } catch {
+    return null
+  }
+}
+
+async function request(path, { method = 'GET', body, headers = {}, auth = false } = {}) {
   const isFormData = typeof FormData !== 'undefined' && body instanceof FormData
-  const finalHeaders = isFormData ? headers : { 'Content-Type': 'application/json', ...headers }
+  const token = auth ? getAuthToken() : null
+  const authHeader = token ? { Authorization: `Bearer ${token}` } : {}
+  const finalHeaders = isFormData ? { ...headers, ...authHeader } : { 'Content-Type': 'application/json', ...headers, ...authHeader }
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
     headers: finalHeaders,
@@ -23,6 +33,7 @@ export const api = {
   get: (path, options = {}) => request(path, { method: 'GET', ...options }),
   post: (path, body, options = {}) => request(path, { method: 'POST', body, ...options }),
   put: (path, body, options = {}) => request(path, { method: 'PUT', body, ...options }),
+  patch: (path, body, options = {}) => request(path, { method: 'PATCH', body, ...options }),
   delete: (path, options = {}) => request(path, { method: 'DELETE', ...options }),
 }
 

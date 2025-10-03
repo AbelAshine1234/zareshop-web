@@ -1,18 +1,27 @@
-import React, { useState, useCallback, lazy, Suspense } from 'react'
+import React, { useState, useCallback, lazy, Suspense, useEffect } from 'react'
 import { FaHeart, FaShoppingCart } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { selectCartItemsCount } from '../../store/selectors'
 import LanguageSwitcher from '../shared/LanguageSwitcher'
 import styles from './TopBar.module.scss'
+import { fetchCategories } from '../../features/categories/categoriesSlice'
 
 // Lazy load the heavy LoginPopup component
 const LoginPopup = lazy(() => import('../LoginPopup'))
 
 const TopBar = React.memo(() => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const cartItemsCount = useSelector(selectCartItemsCount)
+  const { categories, loading, error } = useSelector((s) => s.categories)
+
+  useEffect(() => {
+    if (!categories || categories.length === 0) {
+      dispatch(fetchCategories())
+    }
+  }, [dispatch])
 
   const handleLoginOpen = useCallback(() => {
     setIsLoginOpen(true)
@@ -37,7 +46,29 @@ const TopBar = React.memo(() => {
             </div>
             <a href="#" className={styles.link}>{t('navigation.careers')}</a>
             <a href="#" className={styles.link}>{t('navigation.help')}</a>
-            <a href="#" className={`${styles.link} ${styles.linkCaret}`}>{t('navigation.catalogs')}</a>
+            <div className={styles.dropdown}>
+              <a href="#" className={`${styles.link} ${styles.linkCaret}`}>{t('navigation.catalogs')}</a>
+              <div className={styles.menu}>
+                {loading && (
+                  <div className={styles.menuItem} aria-busy="true">{t('common:loading') || 'Loading...'}</div>
+                )}
+                {!loading && error && (
+                  <button className={styles.menuItem} onClick={() => dispatch(fetchCategories())}>
+                    {t('buttons.tryAgain') || 'Try Again'}
+                  </button>
+                )}
+                {!loading && !error && categories && categories.length > 0 && (
+                  categories.slice(0, 12).map((cat) => (
+                    <a key={cat.id || cat._id || cat.slug} href={`#/category/${cat.id || cat._id || cat.slug}`} className={styles.menuItem}>
+                      {cat.name || cat.title}
+                    </a>
+                  ))
+                )}
+                {!loading && !error && categories && categories.length === 0 && (
+                  <div className={styles.menuItem}>{t('common:noData') || 'No categories'}</div>
+                )}
+              </div>
+            </div>
             <a href="#" className={styles.link}>#iHelp</a>
           </nav>
           <div className={styles.actions}>

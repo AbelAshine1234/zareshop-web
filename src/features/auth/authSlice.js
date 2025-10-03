@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { api } from '../../api/api'
+import { authApi } from '../../api/auth'
 import { formatEthiopianPhone, validateEthiopianPhone } from '../../utils/phoneUtils'
 
 const initialState = {
@@ -26,7 +26,7 @@ export const fetchMe = createAsyncThunk('auth/fetchMe', async (_arg, { getState,
     const state = getState()
     const token = state.auth?.token
     if (!token) return rejectWithValue('Not authenticated')
-    const me = await api.get('/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+    const me = await authApi.me()
     return me
   } catch (e) {
     return rejectWithValue(e.message || 'Failed to load user')
@@ -44,7 +44,7 @@ export const login = createAsyncThunk('auth/login', async (payload, { rejectWith
     } else {
       body.email = identifier.trim()
     }
-    const res = await api.post('/auth/login', body)
+    const res = await authApi.login(body)
     const token = res?.token || res?.access_token || res?.jwt
     if (token) localStorage.setItem('authToken', token)
     return { token }
@@ -56,14 +56,14 @@ export const login = createAsyncThunk('auth/login', async (payload, { rejectWith
 export const forgotPassword = createAsyncThunk('auth/forgotPassword', async (phoneLocal, { rejectWithValue }) => {
   try {
     if (!validateEthiopianPhone(phoneLocal)) throw new Error('Enter valid 9-digit phone starting with 9')
-    await api.post('/auth/forgot-password', { phone_number: formatEthiopianPhone(phoneLocal) })
+    await authApi.forgotPassword({ phone_number: formatEthiopianPhone(phoneLocal) })
     return { info: 'OTP has been sent to your phone.' }
   } catch (e) { return rejectWithValue(e.message || 'Failed to send OTP') }
 })
 
 export const verifyResetOtp = createAsyncThunk('auth/verifyResetOtp', async ({ phoneLocal, code }, { rejectWithValue }) => {
   try {
-    const res = await api.post('/auth/verify-reset-otp', { phone_number: formatEthiopianPhone(phoneLocal), code })
+    const res = await authApi.verifyResetOtp({ phone_number: formatEthiopianPhone(phoneLocal), code })
     const token = res?.reset_token
     if (!token) throw new Error('Missing reset token')
     return { token, info: 'OTP verified. Set your new password.' }
@@ -72,9 +72,26 @@ export const verifyResetOtp = createAsyncThunk('auth/verifyResetOtp', async ({ p
 
 export const resetPassword = createAsyncThunk('auth/resetPassword', async ({ token, new_password }, { rejectWithValue }) => {
   try {
-    await api.post('/auth/reset-password', { token, new_password })
+    await authApi.resetPassword({ token, new_password })
     return { info: 'Password reset successfully.' }
   } catch (e) { return rejectWithValue(e.message || 'Failed to reset password') }
+})
+
+// Vendor owner onboarding (optional OTP flow)
+export const registerVendorOwner = createAsyncThunk('auth/registerVendorOwner', async (formData, { rejectWithValue }) => {
+  try {
+    // formData should be FormData including fields per backend requirements
+    const res = await authApi.registerVendorOwner(formData)
+    return res
+  } catch (e) { return rejectWithValue(e.message || 'Vendor owner registration failed') }
+})
+
+export const verifyOtp = createAsyncThunk('auth/verifyOtp', async (body, { rejectWithValue }) => {
+  try { return await authApi.verifyOtp(body) } catch (e) { return rejectWithValue(e.message || 'OTP verification failed') }
+})
+
+export const resendOtp = createAsyncThunk('auth/resendOtp', async (body, { rejectWithValue }) => {
+  try { return await authApi.resendOtp(body) } catch (e) { return rejectWithValue(e.message || 'Resend OTP failed') }
 })
 
 const authSlice = createSlice({
@@ -114,6 +131,16 @@ const authSlice = createSlice({
       .addCase(resetPassword.pending, (state) => { state.fp.loading = true; state.fp.error=''; state.fp.info='' })
       .addCase(resetPassword.fulfilled, (state, action) => { state.fp.loading = false; state.fp.info = action.payload.info })
       .addCase(resetPassword.rejected, (state, action) => { state.fp.loading = false; state.fp.error = action.payload })
+      // Vendor owner registration/OTP informational messages
+      .addCase(registerVendorOwner.pending, (state) => { state.loading = true; state.error = ''; state.info = '' })
+      .addCase(registerVendorOwner.fulfilled, (state) => { state.loading = false; state.info = 'Registration initiated. Verify OTP.' })
+      .addCase(registerVendorOwner.rejected, (state, action) => { state.loading = false; state.error = action.payload })
+      .addCase(verifyOtp.pending, (state) => { state.loading = true; state.error = ''; state.info = '' })
+      .addCase(verifyOtp.fulfilled, (state) => { state.loading = false; state.info = 'OTP verified.' })
+      .addCase(verifyOtp.rejected, (state, action) => { state.loading = false; state.error = action.payload })
+      .addCase(resendOtp.pending, (state) => { state.loading = true; state.error = ''; state.info = '' })
+      .addCase(resendOtp.fulfilled, (state) => { state.loading = false; state.info = 'OTP resent.' })
+      .addCase(resendOtp.rejected, (state, action) => { state.loading = false; state.error = action.payload })
   }
 })
 
