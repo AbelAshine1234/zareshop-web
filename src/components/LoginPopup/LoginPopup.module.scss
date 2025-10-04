@@ -4,29 +4,30 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: 16px;
+  backdrop-filter: blur(2px);
 }
 
 .popup {
-  background: white;
-  border-radius: 16px;
+  background: #ffffff;
+  border-radius: 12px;
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
   height: auto;
-  overflow: visible;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  animation: slideIn 0.3s ease-out;
+  overflow: hidden;
+  box-shadow: 0 24px 32px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(-20px) scale(0.95);
+    transform: translateY(-30px) scale(0.98);
   }
   to {
     opacity: 1;
@@ -38,385 +39,306 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 24px 0;
+  padding: 20px 24px 0;
   
   .title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #1a1a1a;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
     margin: 0;
+    line-height: 1.5;
   }
   
   .closeButton {
     background: none;
     border: none;
-    font-size: 18px;
-    color: #999;
+    font-size: 1.125rem;
+    color: #6b7280;
     cursor: pointer;
-    padding: 4px;
     border-radius: 50%;
-    transition: all 0.2s ease;
+    padding: 8px;
+    transition: all 0.3s ease;
     
     &:hover {
-      color: #666;
+      color: #374151;
+      background: #f3f4f6;
     }
-  }
-}
-
-.content {
-  padding: 24px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 24px;
-}
-
-.inputGroup {
-  margin-bottom: 16px;
-  
-  .input {
-    width: 100%;
-    padding: 14px 16px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
     
     &:focus {
       outline: none;
-      border-color: #16a34a;
-      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.1);
-    }
-    
-    &::placeholder {
-      color: #999;
+      box-shadow: 0 0 0 2px #3b82f6;
     }
   }
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  width: 100%;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.textInput,
+.phoneInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  
+  &:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  &::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+}
+
+.rowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .options {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  
-  .checkboxContainer {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 14px;
-    color: #666;
-    position: relative;
-    
-    .checkbox {
-      opacity: 0;
-      position: absolute;
-      cursor: pointer;
-      
-      &:checked + .checkmark {
-        background-color: #16a34a;
-        border-color: #16a34a;
-        
-        &::after {
-          display: block;
-        }
-      }
-    }
-    
-    .checkmark {
-      height: 16px;
-      width: 16px;
-      background-color: white;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      margin-right: 8px;
-      position: relative;
-      
-      &::after {
-        content: "";
-        position: absolute;
-        display: none;
-        left: 5px;
-        top: 2px;
-        width: 4px;
-        height: 8px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
-    }
-  }
-  
-  .forgotLink {
-    color: #16a34a;
-    text-decoration: none;
-    font-size: 14px;
-    
-    &:hover {
-      color: #15803d;
-      text-decoration: none;
-    }
-  }
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.loginButton {
-  background: #16a34a;
-  color: white;
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.linkButton {
+  background: none;
   border: none;
-  border-radius: 8px;
-  padding: 14px 16px;
-  font-size: 16px;
-  font-weight: 600;
+  color: #3b82f6;
+  text-decoration: none;
   cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
   transition: all 0.2s ease;
   
   &:hover {
-    background: #15803d;
+    color: #1d4ed8;
+    text-decoration: underline;
   }
   
-  &:active {
-    transform: translateY(1px);
+  &:focus {
+    outline: none;
+    text-decoration: underline;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
   }
 }
 
-
-.footer {
-  text-align: center;
-  
-  p {
-    font-size: 14px;
-    color: #666;
-    margin: 0 0 12px 0;
-  }
-  
-  .registerButton {
-    background: #16a34a;
-    border: none;
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    margin-bottom: 16px;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    
-    &:hover {
-      background: #15803d;
-      text-decoration: none;
-    }
-  }
-  
-  .terms {
-    p {
-      font-size: 12px;
-      color: #999;
-      line-height: 1.4;
-    }
-    
-    .link {
-      color: #16a34a;
-      text-decoration: none;
-      
-      &:hover {
-        color: #15803d;
-        text-decoration: none;
-      }
-    }
-  }
+.link {
+  color: #3b82f6;
+  text-decoration: underline;
+  &:hover { color: #1d4ed8; }
 }
 
-// Phone Entry Styles
-.phoneEntry {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.phoneInputContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
-  width: 100%;
-  max-width: 350px;
-}
-
-.phoneInputWrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  border: 2px solid #16a34a;
-  border-radius: 8px;
-  padding: 0;
-  background: white;
-  transition: all 0.2s ease;
-  
-  &:focus-within {
-    border-color: #15803d;
-  }
-}
-
-.countryCode {
-  background: none;
-  border: none;
-  padding: 12px 8px 12px 16px;
-  font-size: 16px;
-  color: #333;
-  font-weight: 500;
-}
-
-.phoneInput {
-  flex: 1;
-  border: none;
-  padding: 12px 16px 12px 0;
-  font-size: 16px;
-  background: transparent;
-  outline: none;
-  
-  &::placeholder {
-    color: #999;
-  }
-}
-
-.continueButton {
+.primaryBtn {
+  background: #3b82f6;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
-  padding: 14px 24px;
-  font-size: 16px;
+  padding: 12px 20px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  width: 100%;
-  
-  &.disabled {
-    background: #ccc;
-    color: #666;
-    cursor: not-allowed;
-  }
-  
-  &.enabled {
-    background: #16a34a;
-    color: white;
-    cursor: pointer;
-    
-    &:hover {
-      background: #15803d;
-    }
-  }
-}
-
-.loginLink {
-  margin-bottom: 24px;
-  
-  p {
-    font-size: 14px;
-    color: #666;
-    margin: 0;
-  }
-  
-  .linkButton {
-    background: none;
-    border: none;
-    color: #16a34a;
-    text-decoration: none;
-    cursor: pointer;
-    font-size: 14px;
-    
-    &:hover {
-      color: #15803d;
-      text-decoration: underline;
-    }
-  }
-}
-
-.phoneTerms {
-  p {
-    font-size: 12px;
-    color: #999;
-    line-height: 1.4;
-    margin: 0;
-  }
-  
-  .link {
-    color: #16a34a;
-    text-decoration: none;
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-// Profile Selection Styles
-.profileOptions {
+  transition: all 0.3s ease;
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background: #1d4ed8;
+  }
+  
+  &:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+}
+
+.loadingSpinner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loadingSpinner::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.loadingInline {
+  margin-top: 12px;
+  font-size: 0.875rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.codeInput {
+  letter-spacing: 6px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.profileOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 24px;
 }
 
 .profileOption {
-  background: #f8f9fa;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 20px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
   text-align: left;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   
   &:hover {
-    background: #f0f1f2;
-    border-color: #16a34a;
     transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    border-color: #d1d5db;
   }
-  
-  .profileTitle {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin-bottom: 8px;
-  }
-  
-  .profileDescription {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.4;
-  }
+  &:focus { outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,0.25); }
 }
 
-// Responsive design
+.profileTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.profileDescription {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.phoneTerms {
+  padding: 0 24px 16px;
+  color: #6b7280;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* Responsive design */
 @media (max-width: 480px) {
+  .overlay {
+    padding: 12px;
+  }
+  
   .popup {
-    margin: 10px;
-    max-width: none;
+    margin: 8px;
+    max-width: calc(100% - 16px);
+    border-radius: 10px;
   }
   
   .header {
-    padding: 20px 20px 0;
+    padding: 16px 20px 0;
     
     .title {
-      font-size: 18px;
+      font-size: 1.125rem;
+    }
+    
+    .closeButton {
+      padding: 6px;
     }
   }
   
-  .content {
+  .loginForm {
     padding: 20px;
+    gap: 16px;
   }
   
-  .profileOption {
-    padding: 16px;
-    
-    .profileTitle {
-      font-size: 15px;
-    }
-    
-    .profileDescription {
-      font-size: 13px;
-    }
+  .textInput,
+  .phoneInput {
+    padding: 10px 14px;
+    font-size: 0.9375rem;
   }
-}
+  
+  .primaryBtn {
+    padding: 10px 16px;
+    font-size: 0.9375rem;
+  }
+  
+  .label {
+    font-size: 0.8125rem;
+  }
+  
+  }

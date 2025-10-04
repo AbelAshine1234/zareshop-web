@@ -5,6 +5,11 @@
 .leftContent { min-width: 0; }
 .rightSidebar { position: sticky; top: 200px; }
 
+/* Quick navigation */
+.quickNav { display: flex; gap: 10px; padding: 12px 0 8px; }
+.quickLink { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 9999px; text-decoration: none; color: #065f46; font-weight: 600; font-size: 13px; background: #f0fdf4; }
+.quickLink:hover { border-color: #16a34a; background: #dcfce7; }
+
 /* Search */
 .searchSection { background: #ffffff; padding: 4px 0 5px; }
 .searchContainer { display: flex; align-items: center; justify-content: center; gap: 24px; max-width: 100%; }

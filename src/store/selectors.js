@@ -33,11 +33,13 @@ export const selectCurrentProductLoading = createSelector(
 // Recommendations Selector - memoized slice of products with fallback
 export const selectRecommendations = createSelector(
   [selectClientProductsItems, selectClientProductsLoading, selectClientProductsError],
-  (items, loading, error) => ({
-    items: loading ? [] : (error || items.length === 0) ? MOCK_RECOMMENDATIONS : items.slice(0, 8),
-    loading,
-    error
-  })
+  (items, loading, error) => {
+    if (loading) return { items: [], loading, error }
+    if (error || items.length === 0) return { items: MOCK_RECOMMENDATIONS, loading, error }
+    // Pick a random 10 without mutating original
+    const shuffled = [...items].sort(() => Math.random() - 0.5)
+    return { items: shuffled.slice(0, 10), loading, error }
+  }
 )
 
 // Categories Selectors
@@ -79,4 +81,19 @@ export const selectCartItemsCount = createSelector(
 export const selectCartTotal = createSelector(
   [selectCartItems],
   (items) => items.reduce((total, item) => total + (item.price * item.quantity), 0)
+)
+
+// Wishlist Selectors
+export const selectWishlist = (state) => state.wishlist
+export const selectWishlistItems = createSelector(
+  [selectWishlist],
+  (wishlist) => wishlist.items || []
+)
+export const selectWishlistCount = createSelector(
+  [selectWishlistItems],
+  (items) => items.length
+)
+export const makeSelectIsInWishlist = (productId) => createSelector(
+  [selectWishlistItems],
+  (items) => items.some((i) => (i?.id || i?._id || i) === productId)
 )

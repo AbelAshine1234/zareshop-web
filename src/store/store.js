@@ -6,6 +6,8 @@ import vendorProductsReducer from '../features/products/vendorProductsSlice'
 import clientProductsReducer from '../features/products/clientProductsSlice'
 import loadingReducer from '../features/ui/loadingSlice'
 import cartReducer from '../features/cart/cartSlice'
+import ordersReducer from '../features/orders/ordersSlice'
+import wishlistReducer from '../features/wishlist/wishlistSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +18,8 @@ export const store = configureStore({
     loading: loadingReducer,
     cart: cartReducer,
     clientProducts: clientProductsReducer,
+    orders: ordersReducer,
+    wishlist: wishlistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
