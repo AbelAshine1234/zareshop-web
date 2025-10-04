@@ -2,10 +2,12 @@ import React, { useState, useCallback, lazy, Suspense, useEffect } from 'react'
 import { FaHeart, FaShoppingCart } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { selectCartItemsCount } from '../../store/selectors'
+import { selectCartItemsCount, selectWishlistCount } from '../../store/selectors'
 import LanguageSwitcher from '../shared/LanguageSwitcher'
 import styles from './TopBar.module.scss'
 import { fetchCategories } from '../../features/categories/categoriesSlice'
+import { useNavigate } from 'react-router-dom'
+import useAuthMe from '../../hooks/queries/useAuthMe'
 
 // Lazy load the heavy LoginPopup component
 const LoginPopup = lazy(() => import('../LoginPopup'))
@@ -13,15 +15,20 @@ const LoginPopup = lazy(() => import('../LoginPopup'))
 const TopBar = React.memo(() => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const cartItemsCount = useSelector(selectCartItemsCount)
+  const wishlistCount = useSelector(selectWishlistCount)
   const { categories, loading, error } = useSelector((s) => s.categories)
+
+  // Auth: try to load current user (cookie/session based)
+  const { data: me, isSuccess: isAuthed } = useAuthMe()
 
   useEffect(() => {
     if (!categories || categories.length === 0) {
       dispatch(fetchCategories())
     }
-  }, [dispatch])
+  }, [dispatch, categories?.length])
 
   const handleLoginOpen = useCallback(() => {
     setIsLoginOpen(true)
@@ -73,8 +80,16 @@ const TopBar = React.memo(() => {
           </nav>
           <div className={styles.actions}>
             <LanguageSwitcher />
-            <button className={styles.iconBtn} aria-label={t('navigation.favorites')}>
+            <button
+              className={styles.iconBtn}
+              aria-label={t('navigation.favorites')}
+              onClick={() => navigate('/wishlist')}
+              title={t('navigation.favorites')}
+            >
               <FaHeart />
+              {wishlistCount > 0 && (
+                <span className={styles.badge}>{wishlistCount}</span>
+              )}
             </button>
             <button className={styles.iconBtn} aria-label={t('navigation.cart')}>
               <FaShoppingCart />
@@ -82,14 +97,32 @@ const TopBar = React.memo(() => {
                 <span className={styles.cartBadge}>{cartItemsCount}</span>
               )}
             </button>
-            <button 
-              className={styles.link} 
-              onClick={handleLoginOpen}
-              style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-            >
-              {t('navigation.login')}
-            </button>
-            <button className={styles.primaryBtn}>{t('buttons.placeAd')}</button>
+            {isAuthed && me ? (
+              <button
+                className={styles.avatarBtn}
+                onClick={() => navigate('/account')}
+                title={me?.name || me?.email || 'Account'}
+                aria-label="Account"
+                style={{ background: 'none', border: 0, padding: 0, cursor: 'pointer' }}
+              >
+                <img
+                  src={me?.avatarUrl || me?.image_url || me?.profile_image || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(me?.name || me?.email || 'U')}
+                  alt="Profile"
+                  className={styles.avatar}
+                />
+              </button>
+            ) : (
+              <>
+                <button 
+                  className={styles.link} 
+                  onClick={handleLoginOpen}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                >
+                  {t('navigation.login')}
+                </button>
+                <button className={styles.primaryBtn}>{t('buttons.placeAd')}</button>
+              </>
+            )}
           </div>
         </div>
       </div>

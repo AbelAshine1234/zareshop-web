@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useCallback, lazy, Suspense } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useRef, lazy, Suspense } from 'react'
+import { useSelector } from 'react-redux'
 import styles from './HomePage.module.scss'
-import { fetchProducts } from '../../features/products/clientProductsSlice'
 import { selectRecommendations } from '../../store/selectors'
 import LoadingSpinner from '../../components/shared/LoadingSpinner'
+import { useQuery } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 
 // Lazy load heavy components
 const AllHeader = lazy(() => import('../../components/AllHeader'))
@@ -13,18 +14,24 @@ const Services = lazy(() => import('../../components/Services'))
 const Footer = lazy(() => import('../../components/Footer'))
 
 const HomePage = React.memo(() => {
-  const dispatch = useDispatch()
   const recommendations = useSelector(selectRecommendations)
   const leftContentRef = useRef(null)
   const mainLayoutRef = useRef(null)
 
-  const fetchInitialProducts = useCallback(() => {
-    dispatch(fetchProducts({ page: 1, limit: 20 }))
-  }, [dispatch])
-
-  useEffect(() => {
-    fetchInitialProducts()
-  }, [fetchInitialProducts])
+  // Fetch a small batch of products for homepage freshness (cached by React Query)
+  const baseUrl = import.meta.env.VITE_API_URL || '/api'
+  const { isLoading, isError, error } = useQuery({
+    queryKey: ['products', 'list', { page: 1 }],
+    queryFn: async () => {
+      const res = await fetch(`${baseUrl}/products?page=1`)
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body?.error || res.statusText)
+      }
+      return res.json()
+    },
+    staleTime: 60_000,
+  })
 
   return (
     <div className={styles.page}>
@@ -33,6 +40,13 @@ const HomePage = React.memo(() => {
       </Suspense>
       
       <div className="container">
+        {/* Quick navigation */}
+        <nav className={styles.quickNav} aria-label="Quick navigation">
+          <Link to="/products" className={styles.quickLink}>Browse Products</Link>
+          {/* <Link to="/users" className={styles.quickLink}>Users</Link> */}
+          <Link to="/wishlist" className={styles.quickLink}>My Wishlist</Link>
+        </nav>
+
         <div className={styles.mainLayout} ref={mainLayoutRef}>
           {/* Left Content */}
           <div className={styles.leftContent} ref={leftContentRef}>
@@ -59,15 +73,15 @@ const HomePage = React.memo(() => {
         </div>
       </div>
 
-      {/* Loading State */}
-      {recommendations.loading && (
+      {/* Loading State (products fetch) */}
+      {isLoading && (
         <div className="container">
           <div className={styles.loading}>Loading products...</div>
         </div>
       )}
-      {recommendations.error && (
+      {isError && (
         <div className="container">
-          <div className={styles.error}>{recommendations.error}</div>
+          <div className={styles.error}>{error?.message || 'Failed to load products'}</div>
         </div>
       )}
     </div>

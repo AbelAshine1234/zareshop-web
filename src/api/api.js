@@ -51,6 +51,19 @@ export const categoryEndpoints = {
   getSubcategories: (categoryId) => `/category/${categoryId}/subcategories`,
 }
 
+// Product endpoints
+export const productEndpoints = {
+  getProducts: '/products',
+  getProductById: (productId) => `/products/${productId}`,
+}
+
+// Wishlist endpoints (adjust if your backend differs)
+export const wishlistEndpoints = {
+  getWishlist: '/wishlist',
+  add: '/wishlist', // POST { product_id }
+  removeByProduct: (productId) => `/wishlist/${productId}`,
+}
+
 // Vendor endpoints
 export const vendorEndpoints = {
   create: (type) => `/vendors/${type === 'business' ? 'business' : 'individual'}`,

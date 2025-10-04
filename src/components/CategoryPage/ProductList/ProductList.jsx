@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useMemo, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { FaHeart, FaCamera, FaTruck, FaMapMarkerAlt, FaStar, FaPhone, FaComment, FaShare, FaEye } from 'react-icons/fa'
+import { addToWishlist, removeFromWishlist } from '../../../features/wishlist/wishlistSlice'
+import { selectWishlistItems } from '../../../store/selectors'
 import styles from './ProductList.module.scss'
 
 export default function ProductList({ products, viewMode }) {
+  const dispatch = useDispatch()
+  const wishlistItems = useSelector(selectWishlistItems)
+  const favSet = useMemo(() => new Set((wishlistItems || []).map((i) => i?.id || i?._id || i)), [wishlistItems])
+
+  const toggleFav = useCallback((productId, isFav) => {
+    if (isFav) {
+      dispatch(removeFromWishlist(productId))
+    } else {
+      dispatch(addToWishlist(productId))
+    }
+  }, [dispatch])
+
   if (viewMode === 'list') {
     return (
       <div className={styles.productsList}>
@@ -16,7 +31,12 @@ export default function ProductList({ products, viewMode }) {
                   <span>{product.imageCount}</span>
                 </div>
               )}
-              <button className={styles.favoriteBtn}>
+              <button
+                className={`${styles.favoriteBtn} ${favSet.has(product.id) ? styles.active : ''}`}
+                aria-pressed={favSet.has(product.id)}
+                onClick={() => toggleFav(product.id, favSet.has(product.id))}
+                title={favSet.has(product.id) ? 'Remove from favorites' : 'Add to favorites'}
+              >
                 <FaHeart />
               </button>
             </div>
@@ -133,7 +153,12 @@ export default function ProductList({ products, viewMode }) {
                 {product.priceTag}
               </div>
             )}
-            <button className={styles.favoriteBtn}>
+            <button
+              className={`${styles.favoriteBtn} ${favSet.has(product.id) ? styles.active : ''}`}
+              aria-pressed={favSet.has(product.id)}
+              onClick={() => toggleFav(product.id, favSet.has(product.id))}
+              title={favSet.has(product.id) ? 'Remove from favorites' : 'Add to favorites'}
+            >
               <FaHeart />
             </button>
           </div>
